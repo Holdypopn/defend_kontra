@@ -11,8 +11,7 @@ public class Movement : MonoBehaviour
     Stack<Tile> path = new Stack<Tile>();
     protected Tile currentTile;
 
-    public bool moving = false;
-    public int move = 2;
+    protected bool moving = false;
     public float jumpHeight = 2;
     public float moveSpeed = 2;
     public float jumpVelocity = 4.5f;
@@ -23,9 +22,7 @@ public class Movement : MonoBehaviour
     float halfHeight = 0;
 
     //TODO Simplify with ENUM
-    bool fallingDown = false;
-    bool jumpingUp = false;
-    bool movingEdge = false;
+    JumpState jumpState = JumpState.None;
     Vector3 jumpTarget;
 
     protected void Init()
@@ -72,40 +69,20 @@ public class Movement : MonoBehaviour
     {
         ComputeAdjacencyList();
         GetCurrentTile();
+        
+        Tile t = currentTile;
 
-        Queue<Tile> process = new Queue<Tile>();
-
-        process.Enqueue(currentTile);
-        currentTile.visited = true;
-        //currentTile.parent = ?? leave as null
-
-        while (process.Count > 0)
+        selectableTiles.Add(t);
+        
+        foreach (Tile tile in t.adjacencyList)
         {
-            Tile t = process.Dequeue();
-
-            selectableTiles.Add(t);
-            t.selectable = true;
-            Debug.Log("move: " + move);
-            if (t.distance < move)
-            {
-                foreach (Tile tile in t.adjacencyList)
-                {
-                    if (!tile.visited)
-                    {
-                        tile.parent = t;
-                        tile.visited = true;
-                        tile.distance = 1 + t.distance;
-                        process.Enqueue(tile);
-                    }
-                }
-            }
+            tile.parent = t;
         }
     }
 
     public void MoveToTile(Tile tile)
     {
         path.Clear();
-        tile.target = true;
         moving = true;
 
         Tile next = tile;
@@ -185,21 +162,20 @@ public class Movement : MonoBehaviour
 
     void Jump(Vector3 target)
     {
-        if (fallingDown)
+        switch(jumpState)
         {
-            FallDownward(target);
-        }
-        else if (jumpingUp)
-        {
-            JumpUpward(target);
-        }
-        else if (movingEdge)
-        {
-            MoveToEdge();
-        }
-        else
-        {
-            PrepareJump(target);
+            case JumpState.FallDown:
+                FallDownward(target);
+                break;
+            case JumpState.JumpUp:
+                JumpUpward(target);
+                break;
+            case JumpState.MoveToEdge:
+                MoveToEdge();
+                break;
+            default:
+                PrepareJump(target);
+                break;
         }
     }
 
@@ -211,8 +187,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            movingEdge = false;
-            fallingDown = true;
+            jumpState = JumpState.FallDown;
 
             velocity /= 5.0f;
             velocity.y = 1.5f;
@@ -225,8 +200,7 @@ public class Movement : MonoBehaviour
 
         if(transform.position.y > target.y)
         {
-            jumpingUp = false;
-            fallingDown = true;
+            jumpState = JumpState.FallDown;
         }
     }
 
@@ -236,9 +210,7 @@ public class Movement : MonoBehaviour
 
         if(transform.position.y <= target.y)
         {
-            fallingDown = false;
-            jumpingUp = false;
-            movingEdge = false;
+            jumpState = JumpState.None;
 
             Vector3 p = transform.position;
             p.y = target.y;
@@ -259,17 +231,13 @@ public class Movement : MonoBehaviour
         //Lower than character unit -> falling
         if (transform.position.y > targetY)
         {
-            fallingDown = false;
-            jumpingUp = false;
-            movingEdge = true;
+            jumpState = JumpState.MoveToEdge;
 
             jumpTarget = transform.position + (target - transform.position) / 2.0f;
         }
         else
         {
-            fallingDown = false;
-            jumpingUp = true;
-            movingEdge = false;
+            jumpState = JumpState.JumpUp;
 
             velocity = heading * moveSpeed / 3.0f;
 
@@ -277,5 +245,13 @@ public class Movement : MonoBehaviour
                         
             velocity.y = jumpVelocity * (0.5f + difference / 2.0f);
         }
+    }
+
+    public enum JumpState
+    {
+        FallDown,
+        MoveToEdge,
+        JumpUp,
+        None
     }
 }

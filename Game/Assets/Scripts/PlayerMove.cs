@@ -46,12 +46,8 @@ public class PlayerMove : Movement
         {
             if (t != null)
             {
-                Debug.Log("t.selectable: " + t.selectable);
-                if (t.selectable)
-                {
-                    //Move targets
-                    MoveToTile(t);
-                }
+                //Move targets
+                MoveToTile(t);
             }
         }
     }

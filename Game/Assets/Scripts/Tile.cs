@@ -1,63 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
     public bool walkable = true;
     public bool current = false;
-    public bool target = false;
     public bool selectable = false;
 
     /// <summary>
     /// Contains the neighbours of the tile
     /// </summary>
     public List<Tile> adjacencyList = new List<Tile>();
-
-    //Needed BFS (breadth first search)
-    public bool visited = false;
+    
     public Tile parent = null;
-    public int distance = 0;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (current)
-        {
-            GetComponent<Renderer>().material.color = Color.magenta;
-        }
-        else if (target)
-        {
-            GetComponent<Renderer>().material.color = Color.green;
-        }
-        else if (selectable)
-        {
-            GetComponent<Renderer>().material.color = Color.red;
-        }
-        else
-        {
-            GetComponent<Renderer>().material.color = Color.white;
-        }
-    }
 
     public void Reset()
     {
         adjacencyList.Clear();
 
         current = false;
-        target = false;
-        selectable = false;
-
-        visited = false;
+        
         parent = null;
-        distance = 0;
     }
 
     internal Tile GetDownNeighbour(float jumpHeight)
