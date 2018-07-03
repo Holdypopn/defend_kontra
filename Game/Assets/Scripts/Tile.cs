@@ -5,7 +5,6 @@ public class Tile : MonoBehaviour
 {
     public bool walkable = true;
     public bool current = false;
-    public bool selectable = false;
 
     /// <summary>
     /// Contains the neighbours of the tile

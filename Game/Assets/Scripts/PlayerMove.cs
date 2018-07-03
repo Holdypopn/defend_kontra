@@ -44,6 +44,7 @@ public class PlayerMove : Movement
 
         if (SwipeManager.SelectedPlayer == this)
         {
+            SwipeManager.SelectedPlayer = null;
             if (t != null)
             {
                 //Move targets
