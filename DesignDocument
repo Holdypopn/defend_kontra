@@ -1,0 +1,44 @@
+Design Document
+===============
+
+Game Identity / Mantra:
+-----------------------
+Defend the base till the last man falls.
+
+Design Pillars:
+---------------
+- Defend base from enemies
+- Intense moments to hold the wall
+- Perma Death for defenders
+
+Features:
+---------
+- Micro-Management of team
+- Different weapons
+- Different enemies
+
+Interface:
+----------
+- Enemy lanes / Wall / Team / Base
+- Touch
+
+Art Style:
+----------
+- Dark?
+- Low-poly
+
+Music / Sound:
+--------------
+- Dark / Sad / Hopeless / Endless
+
+Development Roadmap / Launch Criteria:
+--------------------------------------
+Platform: Google Play / iOS
+Audience: 12-40 / Both genders / Casual gamer
+
+Milestone 1: Defender Micro Management System
+Milestone 2: Enemy Spawning
+Milestone 3: Defender Actions (Shoot/Repair/Fight?)
+Milestone 4: Different enemies/weapons
+Milestone 5: General polishing/balancing
+Milestone 6: Build and Publish
