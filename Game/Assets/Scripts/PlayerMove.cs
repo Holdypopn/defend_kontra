@@ -7,14 +7,14 @@ public class PlayerMove : Movement
 {
     public Swipe SwipeManager;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         Init();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         Debug.DrawRay(transform.position, transform.forward);
         if (!moving)
@@ -27,30 +27,10 @@ public class PlayerMove : Movement
         {
             Move();
         }
-	}
+    }
 
     void CheckSwipe()
     {
-        //if(Input.GetMouseButtonUp(0))
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        //    RaycastHit hit;
-        //    if(Physics.Raycast(ray, out hit))
-        //    {
-        //        if(hit.collider.tag.Contains("Tile") || hit.collider.tag.Contains("Wall"))
-        //        {
-        //            Tile t = hit.collider.GetComponent<Tile>();
-
-        //            if(t.selectable)
-        //            {
-        //                //Move targets
-        //                MoveToTile(t);
-        //            }
-        //        }
-        //    }
-        //}
-
         Tile t = null;
 
         if (SwipeManager.SwipeDown)
@@ -61,13 +41,17 @@ public class PlayerMove : Movement
             t = currentTile.GetRightNeighbour(jumpHeight);
         if (SwipeManager.SwipeUp)
             t = currentTile.GetUpNeighbour(jumpHeight);
-        
-        if (t!= null)
+
+        if (SwipeManager.SelectedPlayer == this)
         {
-            if (t.selectable)
+            if (t != null)
             {
-                //Move targets
-                MoveToTile(t);
+                Debug.Log("t.selectable: " + t.selectable);
+                if (t.selectable)
+                {
+                    //Move targets
+                    MoveToTile(t);
+                }
             }
         }
     }
