@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IDestructible
 {
-    public bool walkable = true;
+    public bool walkableEnemy = false;
+    public bool walkablePlayer = true;
     public bool current = false;
     public bool destructible = false;
     public float MaxHealth = 100;
@@ -26,41 +27,41 @@ public class Tile : MonoBehaviour
         parent = null;
     }
 
-    internal Tile GetDownNeighbour(float jumpHeight)
+    internal Tile GetDownNeighbour(float jumpHeight, bool isEnemy = false)
     {
-        return CheckTile(-Vector3.forward, jumpHeight);
+        return CheckTile(-Vector3.forward, jumpHeight, isEnemy);
     }
 
-    internal Tile GetRightNeighbour(float jumpHeight)
+    internal Tile GetRightNeighbour(float jumpHeight, bool isEnemy = false)
     {
-        return CheckTile(Vector3.right, jumpHeight);
+        return CheckTile(Vector3.right, jumpHeight, isEnemy);
     }
 
-    internal Tile GetLeftNeighbour(float jumpHeight)
+    internal Tile GetLeftNeighbour(float jumpHeight, bool isEnemy = false)
     {
-        return CheckTile(-Vector3.right, jumpHeight);
+        return CheckTile(-Vector3.right, jumpHeight, isEnemy);
     }
 
-    internal Tile GetUpNeighbour(float jumpHeight)
+    internal Tile GetUpNeighbour(float jumpHeight, bool isEnemy = false)
     {
-        return CheckTile(Vector3.forward, jumpHeight);
+        return CheckTile(Vector3.forward, jumpHeight, isEnemy);
     }
 
     /// <summary>
     /// Finds the neighbours of the tile
     /// </summary>
     /// <param name="jumpHeight">How far can player walk in blocks (mostly one)</param>
-    public void FindNeighbors(float jumpHeight)
+    public void FindNeighbors(float jumpHeight, bool isEnemy = false)
     {
         Reset();
 
-        GetDownNeighbour(jumpHeight);
-        GetUpNeighbour(jumpHeight);
-        GetLeftNeighbour(jumpHeight);
-        GetRightNeighbour(jumpHeight);
+        GetDownNeighbour(jumpHeight, isEnemy);
+        GetUpNeighbour(jumpHeight, isEnemy);
+        GetLeftNeighbour(jumpHeight, isEnemy);
+        GetRightNeighbour(jumpHeight, isEnemy);
     }
 
-    public Tile CheckTile(Vector3 direction, float jumpHeight)
+    public Tile CheckTile(Vector3 direction, float jumpHeight, bool isEnemy = false)
     {
         Vector3 halfExtents = new Vector3(0.25f, (1 + jumpHeight) / 2.0f, 0.25f); //Range of jumping
         Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
@@ -71,7 +72,7 @@ public class Tile : MonoBehaviour
         {
             Tile tile = item.GetComponent<Tile>();
 
-            if (tile != null && tile.walkable)
+            if (tile != null && ((tile.walkablePlayer && !isEnemy) || (tile.walkableEnemy && isEnemy)))
             {
                 RaycastHit hit;
                 //Check if block is blocked (item is already on the block)
@@ -85,6 +86,36 @@ public class Tile : MonoBehaviour
         }
 
         return firstCollider;
+    }
+
+    /// <summary>
+    /// For enemy, gets the down tile/player gameobject which blocks the enemy
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetDownGameObject()
+    {
+        Vector3 direction = -Vector3.forward;
+
+        Vector3 halfExtents = new Vector3(0.25f, 2 / 2.0f, 0.25f); //Range of jumping
+        Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
+        
+        foreach (Collider item in colliders)
+        {
+            Tile tile = item.GetComponent<Tile>();
+
+            if (tile != null )
+            {
+                RaycastHit hit;
+                //Check if block is on front 
+                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
+                {
+                    return tile.gameObject;
+                }
+
+                return hit.transform.gameObject;
+            }
+        }
+        return null;
     }
 
     public void TakeDamage(float amount)

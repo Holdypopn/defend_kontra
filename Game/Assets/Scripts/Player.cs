@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : Movement
+public class Player : Movement, IDestructible
 {
     public Swipe SwipeManager;
 

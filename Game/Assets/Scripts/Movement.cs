@@ -56,18 +56,20 @@ public class Movement : MonoBehaviour
         return tile;
     }
 
-    public void ComputeAdjacencyList()
+    public void ComputeAdjacencyList(bool isEnemy = false)
     {
         foreach (GameObject tile in tiles)
         {
+            if (tile == null)//tile is destoyed
+                continue;
             Tile t = tile.GetComponent<Tile>();
-            t.FindNeighbors(jumpHeight);
+            t.FindNeighbors(jumpHeight, isEnemy);
         }
     }
 
-    public void FindSelectableTiles()
+    public void FindSelectableTiles(bool isEnemy = false)
     {
-        ComputeAdjacencyList();
+        ComputeAdjacencyList(isEnemy);
         GetCurrentTile();
         
         Tile t = currentTile;
