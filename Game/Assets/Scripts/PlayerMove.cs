@@ -22,6 +22,25 @@ public class PlayerMove : Movement
             Debug.Log("End of Moving");
             FindSelectableTiles();
             CheckSwipe();
+            
+            switch (currentTile.tag)
+            {
+                case "WallTile":
+                    Debug.Log("WallTile");
+                    break;
+                case "ResourceTile":
+                    Debug.Log("ResourceTile");
+                    break;
+                case "RepairTile":
+                    Debug.Log("RepairTile");
+                    break;
+                case "BaseTile":
+                    Debug.Log("BaseTile");
+                    break;
+                case "Wall":
+                    Debug.Log("Wall");
+                    break;
+            }
         }
         else
         {
