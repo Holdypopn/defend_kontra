@@ -5,6 +5,10 @@ public class Tile : MonoBehaviour
 {
     public bool walkable = true;
     public bool current = false;
+    public bool destructible = false;
+    public float MaxHealth = 100;
+
+    public float currentHealth;
 
     /// <summary>
     /// Contains the neighbours of the tile
@@ -81,5 +85,32 @@ public class Tile : MonoBehaviour
         }
 
         return firstCollider;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if (destructible)
+        {
+            currentHealth -= amount;
+
+            if (currentHealth <= 0)
+                Destroy();
+        }
+    }
+
+    public void Repair(float amount)
+    {
+        if(destructible)
+        {
+            currentHealth += amount;
+
+            if (currentHealth > MaxHealth)
+                currentHealth = MaxHealth;
+        }
+    }
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

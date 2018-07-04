@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Swipe : MonoBehaviour
 {
-    private const int deathzone = 50; //deathzone in pixel
+    private const int deathzone = 20; //deathzone in pixel
     private bool tap, swipeLeft, swipeRight, swipeUp, swipeDown;
     private bool isDraging = false;
     private Vector2 startTouch, swipeDelta;

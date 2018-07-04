@@ -1009,6 +1009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
+  destructible: 1
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114093477642304966
@@ -1024,6 +1025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114112952411872922
@@ -1039,6 +1041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114226342676910158
@@ -1054,6 +1057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114390126474026168
@@ -1069,6 +1073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114498049858389434
@@ -1084,6 +1089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114600134069697542
@@ -1099,6 +1105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114780503777951986
@@ -1114,6 +1121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114829703658578782
@@ -1129,6 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114865080858994422
@@ -1144,6 +1153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
 --- !u!114 &114892144579925342
@@ -1159,5 +1169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
+  destructible: 0
   adjacencyList: []
   parent: {fileID: 0}
