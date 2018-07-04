@@ -90,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772626201886544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1, z: 9}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 224034603500472042}
@@ -178,9 +178,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 0
-  moveSpeed: 2
+  moveSpeed: 1
   jumpVelocity: 4.5
+  DamageTick: 0.9
   SwipeManager: {fileID: 0}
+  Damage: 1.5
   MaxHealth: 10
   healthBar: {fileID: 0}
 --- !u!114 &114165839247749818

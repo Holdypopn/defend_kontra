@@ -8,7 +8,7 @@ public class Enemy : Movement, IDestructible
 {
     //Defines the damage tick
     private float nextActionTime = 0.0f;
-    public float DamageTick = 1000f;
+    public float DamageTick = 0.9f;
 
     public Swipe SwipeManager;
 
