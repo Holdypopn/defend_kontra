@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeathBarRotation : MonoBehaviour
+public class HealthBarRotation : MonoBehaviour
 {
-    
-	// Update is called once per frame
-	void Update ()
+    void Start()
+    {
+        Refresh();
+    }
+	
+    /// <summary>
+    /// Updates the healthbar direction to the camera
+    /// </summary>
+	public void Refresh ()
     {
         Vector3 v = Camera.main.transform.position - transform.position;
 

@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class Tools
 {
-    [MenuItem("Tools/Assign Tile Material")]
+    //[MenuItem("Tools/Assign Tile Material")]
     public static void AssignTileMaterial()
     {
         DoMaterialAssignment("EnemyTile");

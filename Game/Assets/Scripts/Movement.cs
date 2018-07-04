@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     protected Tile currentTile;
 
     protected bool moving = false;
+    private bool movingInit = false;
     public float jumpHeight = 2;
     public float moveSpeed = 2;
     public float jumpVelocity = 4.5f;
@@ -111,7 +112,9 @@ public class Movement : MonoBehaviour
             Vector3 target = t.transform.position;
 
             if (!tilesInUse.Contains(t)) //Two gameobjets not allowed to move to the same tile
+            {
                 tilesInUse.Add(t);
+            }
             
             //Calculate the units position on top on the target tile
             target.y += halfHeight + t.GetComponent<Collider>().bounds.extents.y;
@@ -131,6 +134,13 @@ public class Movement : MonoBehaviour
                 }
                 transform.forward = heading;
                 transform.position += velocity * Time.deltaTime;
+
+                //Rotate Healthbar
+                if (!movingInit)
+                {
+                    transform.GetChild(0).GetComponent<HealthBarRotation>().Refresh();
+                    movingInit = true;
+                }
             }
             else
             {
@@ -138,6 +148,7 @@ public class Movement : MonoBehaviour
                 transform.position = target;
                 path.Pop();
                 tilesInUse.Remove(t);
+                movingInit = false;
             }
         }
         else

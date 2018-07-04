@@ -81,7 +81,6 @@ public class Player : Movement, IDestructible
 
     public void TakeDamage(float amount)
     {
-        Debug.Log("Tick");
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / MaxHealth;
 
