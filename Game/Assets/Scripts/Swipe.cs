@@ -8,7 +8,7 @@ public class Swipe : MonoBehaviour
     private bool tap, swipeLeft, swipeRight, swipeUp, swipeDown;
     private bool isDraging = false;
     private Vector2 startTouch, swipeDelta;
-    public PlayerMove SelectedPlayer = null;
+    public Player SelectedPlayer = null;
 
     public Vector2 SwipeDelta { get { return swipeDelta; } }
     public bool SwipeLeft { get { return swipeLeft; } }
@@ -74,7 +74,7 @@ public class Swipe : MonoBehaviour
             {
                 if(hit.collider.tag == "Player")
                 {
-                    SelectedPlayer = hit.collider.GetComponent<PlayerMove>();
+                    SelectedPlayer = hit.collider.GetComponent<Player>();
                 }
             }
 

@@ -2,15 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerMove : Movement
+public class Player : Movement
 {
     public Swipe SwipeManager;
+
+    public float MaxHealth = 10;
+    private float currentHealth;
+
+    public Image healthBar;
 
     // Use this for initialization
     void Start()
     {
         Init();
+
+        currentHealth = MaxHealth;
     }
 
     // Update is called once per frame
@@ -70,5 +78,21 @@ public class PlayerMove : Movement
                 MoveToTile(t);
             }
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        healthBar.fillAmount = currentHealth / MaxHealth;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

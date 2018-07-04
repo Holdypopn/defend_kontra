@@ -293,8 +293,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1670054046167788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4146622653382980}
@@ -384,7 +384,7 @@ Transform:
   m_GameObject: {fileID: 1612141050459218}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4183607156663996}
   m_RootOrder: 10
@@ -1009,12 +1009,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114093477642304966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1028,12 +1024,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114112952411872922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1047,12 +1039,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114226342676910158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1066,12 +1054,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114390126474026168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1085,12 +1069,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114498049858389434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1104,12 +1084,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114600134069697542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1123,12 +1099,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114780503777951986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1142,12 +1114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 0
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114829703658578782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1161,12 +1129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114865080858994422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1180,12 +1144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
 --- !u!114 &114892144579925342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1199,9 +1159,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkable: 1
   current: 0
-  target: 0
-  selectable: 0
   adjacencyList: []
-  visited: 0
   parent: {fileID: 0}
-  distance: 0
