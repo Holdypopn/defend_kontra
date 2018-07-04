@@ -229,7 +229,7 @@ MonoBehaviour:
   moveSpeed: 2
   jumpVelocity: 4.5
   SwipeManager: {fileID: 0}
-  MaxHealth: 10
+  MaxHealth: 7
   healthBar: {fileID: 114078724030524306}
 --- !u!114 &114675263303735958
 MonoBehaviour:

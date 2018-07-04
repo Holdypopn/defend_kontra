@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    static List<Tile> tilesInUse = new List<Tile>();
     List<Tile> selectableTiles = new List<Tile>();
     List<GameObject> tiles = new List<GameObject>();
 
@@ -84,6 +85,12 @@ public class Movement : MonoBehaviour
 
     public void MoveToTile(Tile tile)
     {
+        if (tilesInUse.Contains(tile))
+        {
+            Debug.Log("Tile already in use!");
+            return;
+        }
+
         path.Clear();
         moving = true;
 
@@ -103,6 +110,9 @@ public class Movement : MonoBehaviour
             Tile t = path.Peek();
             Vector3 target = t.transform.position;
 
+            if (!tilesInUse.Contains(t)) //Two gameobjets not allowed to move to the same tile
+                tilesInUse.Add(t);
+            
             //Calculate the units position on top on the target tile
             target.y += halfHeight + t.GetComponent<Collider>().bounds.extents.y;
 
@@ -127,6 +137,7 @@ public class Movement : MonoBehaviour
                 //Tile center reached
                 transform.position = target;
                 path.Pop();
+                tilesInUse.Remove(t);
             }
         }
         else

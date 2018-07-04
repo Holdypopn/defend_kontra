@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class Enemy : Movement, IDestructible
 {
+    //Defines the damage tick
+    private float nextActionTime = 0.0f;
+    public float DamageTick = 1000f;
+
     public Swipe SwipeManager;
 
     public float Damage = 1.5f;
@@ -35,7 +39,13 @@ public class Enemy : Movement, IDestructible
         {
             try //TODO: remove try catch and return bool if player is death
             {
-                destructibleInFront.TakeDamage(Damage);
+                if (Time.time > nextActionTime)
+                {
+                    nextActionTime += DamageTick;
+
+                    if(nextActionTime != 0) //Skip first damage
+                        destructibleInFront.TakeDamage(Damage);
+                }
             }
             catch
             {
@@ -66,10 +76,7 @@ public class Enemy : Movement, IDestructible
 
     void GetMoveOrAttackTile()
     {
-        Debug.Log("Curr: " + currentTile.name);
         Tile t = currentTile.GetDownNeighbour(jumpHeight, true);
-
-        Debug.Log("t: " + t);
 
         if (t != null)
         {

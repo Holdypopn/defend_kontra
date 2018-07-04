@@ -8,7 +8,7 @@ public class Player : Movement, IDestructible
 {
     public Swipe SwipeManager;
 
-    public float MaxHealth = 10;
+    public float MaxHealth = 4;
     private float currentHealth;
 
     public Image healthBar;
@@ -27,7 +27,6 @@ public class Player : Movement, IDestructible
         Debug.DrawRay(transform.position, transform.forward);
         if (!moving)
         {
-            Debug.Log("End of Moving");
             FindSelectableTiles();
             CheckSwipe();
             
