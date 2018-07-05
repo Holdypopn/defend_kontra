@@ -387,15 +387,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1772626201886544, guid: cdb8827ec78bd824ebf4890e2d53e2bc, type: 2}
+      propertyPath: m_Name
+      value: Player (0)
+      objectReference: {fileID: 0}
     - target: {fileID: 114671214950402988, guid: cdb8827ec78bd824ebf4890e2d53e2bc,
         type: 2}
       propertyPath: SwipeManager
       value: 
       objectReference: {fileID: 334369792}
-    - target: {fileID: 1772626201886544, guid: cdb8827ec78bd824ebf4890e2d53e2bc, type: 2}
-      propertyPath: m_Name
-      value: Player (0)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cdb8827ec78bd824ebf4890e2d53e2bc, type: 2}
   m_IsPrefabParent: 0

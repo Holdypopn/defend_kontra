@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Enemy : Movement, IDestructible
 {
     //Defines the damage tick
-    private float nextActionTime = 0.0f;
+    private ActionTick actionTick;
     public float DamageTick = 0.9f;
 
     public Swipe SwipeManager;
@@ -20,7 +20,7 @@ public class Enemy : Movement, IDestructible
     /// <summary>
     /// Is set when a destructible is in front of enemy
     /// </summary>
-    private IDestructible destructibleInFront = null; 
+    private IDestructible destructibleInFront = null;
 
     public Image healthBar;
 
@@ -30,21 +30,20 @@ public class Enemy : Movement, IDestructible
         Init();
 
         currentHealth = MaxHealth;
+
+        actionTick = new ActionTick(DamageTick);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(destructibleInFront != null)
+        if (destructibleInFront != null)
         {
             try //TODO: remove try catch and return bool if player is death
             {
-                if (Time.time > nextActionTime)
+                if (actionTick.IsAction())
                 {
-                    nextActionTime += DamageTick;
-
-                    if(nextActionTime != 0) //Skip first damage
-                        destructibleInFront.TakeDamage(Damage);
+                    destructibleInFront.TakeDamage(Damage);
                 }
             }
             catch
@@ -55,7 +54,7 @@ public class Enemy : Movement, IDestructible
         else if (!moving)
         {
             FindSelectableTiles(true);
-            
+
             GetMoveOrAttackTile();//Moves the enemy or sets the destructibleInFront
 
             if (currentTile.tag == "BaseTile")
@@ -86,13 +85,13 @@ public class Enemy : Movement, IDestructible
         {
             var go = currentTile.GetDownGameObject();
 
-            if(go == null)//Nothing in Front, reach end of map
+            if (go == null)//Nothing in Front, reach end of map
                 return;
 
             var isEnemy = go.GetComponent<Enemy>() != null; //Avoid enemy attack enemy
             var destructible = go.GetComponent<IDestructible>();
 
-            if(destructible != null && !isEnemy)
+            if (destructible != null && !isEnemy)
             {
                 destructibleInFront = destructible;
             }

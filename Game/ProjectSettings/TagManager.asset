@@ -11,6 +11,8 @@ TagManager:
   - ResourceTile
   - Wall
   - NPC
+  - StoneResourceCount
+  - AmmoResourceCount
   layers:
   - Default
   - TransparentFX

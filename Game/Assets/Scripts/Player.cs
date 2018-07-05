@@ -6,6 +6,17 @@ using UnityEngine.UI;
 
 public class Player : Movement, IDestructible
 {
+    //Defines the damage tick
+    private ActionTick resourceActionTick;
+    public float ResourceTick = 0.9f;
+
+    /// <summary>
+    /// Resource manager
+    /// </summary>
+    private Resource Resources;
+    public int StartStones = 5;
+    public int StartAmmo = 20;
+
     public Swipe SwipeManager;
 
     public float MaxHealth = 4;
@@ -19,6 +30,10 @@ public class Player : Movement, IDestructible
         Init();
 
         currentHealth = MaxHealth;
+
+        resourceActionTick = new ActionTick(ResourceTick);
+
+        Resources = new Resource(StartStones, StartAmmo, transform);
     }
 
     // Update is called once per frame
@@ -36,10 +51,12 @@ public class Player : Movement, IDestructible
                     Debug.Log("WallTile");
                     break;
                 case "ResourceTile":
-                    Debug.Log("ResourceTile");
+                    if(resourceActionTick.IsAction())
+                    {
+                        Resources.AddRandomResource();
+                    }
                     break;
                 case "RepairTile":
-                    Debug.Log("RepairTile");
                     break;
                 case "BaseTile":
                     Debug.Log("BaseTile");
