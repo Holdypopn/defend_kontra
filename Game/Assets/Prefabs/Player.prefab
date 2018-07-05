@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 23386930768803484}
   - component: {fileID: 136613595754488726}
   - component: {fileID: 114671214950402988}
+  - component: {fileID: 114086853174541124}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -175,7 +176,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772626201886544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.516, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 224034603500472042}
@@ -251,6 +252,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114086853174541124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772626201886544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3645542c88baf1740a4d560eba537110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Projectile: {fileID: 1240094358804122, guid: 8f6206cbd549de248ab0d217209bee7d, type: 2}
+  velocity: 90
+  Offset: {x: 0, y: 0, z: 0.5}
 --- !u!114 &114149241083124626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -368,6 +383,11 @@ MonoBehaviour:
   moveSpeed: 2
   jumpVelocity: 4.5
   ResourceTick: 0.9
+  RepairTick: 0.9
+  ShootTick: 0.9
+  RepairEfficiencyPerStone: 0.5
+  StartStones: 5
+  StartAmmo: 20
   SwipeManager: {fileID: 0}
   MaxHealth: 7
   healthBar: {fileID: 114078724030524306}

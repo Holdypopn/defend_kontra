@@ -14,6 +14,11 @@ public class Player : Movement, IDestructible
     private ActionTick repairActionTick;
     public float RepairTick = 0.9f;
     
+    //Defines the Repair Tick
+    private ActionTick shootActionTick;
+    public float ShootTick = 0.9f;
+    public float Damage = 1.5f;
+    
     public float RepairEfficiencyPerStone = 0.5f;
 
     /// <summary>
@@ -39,6 +44,7 @@ public class Player : Movement, IDestructible
 
         resourceActionTick = new ActionTick(ResourceTick);
         repairActionTick = new ActionTick(RepairTick);
+        shootActionTick = new ActionTick(ShootTick);
 
         Resources = new Resource(StartStones, StartAmmo, transform);
     }
@@ -84,7 +90,16 @@ public class Player : Movement, IDestructible
                     Debug.Log("BaseTile");
                     break;
                 case "Wall":
-                    Debug.Log("Wall");
+                    if (shootActionTick.IsAction())
+                    {
+                        if (Resources.Ammo > 0)
+                        {
+                            int row = Int32.Parse(currentTile.transform.parent.name.Split('(')[1].Split(')')[0]);//TODO refactor read of row
+                            
+                            if(transform.GetComponent<Shoot>().Shooting(row, Damage))
+                                Resources.UseAmmo();
+                        }
+                    }
                     break;
             }
         }

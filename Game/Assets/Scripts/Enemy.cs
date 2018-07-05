@@ -10,8 +10,6 @@ public class Enemy : Movement, IDestructible
     private ActionTick actionTick;
     public float DamageTick = 0.9f;
 
-    public Swipe SwipeManager;
-
     public float Damage = 1.5f;
 
     public float MaxHealth = 10;
@@ -111,6 +109,18 @@ public class Enemy : Movement, IDestructible
 
     private void Die()
     {
+        EnemySpawn.RemoveGameObject(gameObject);
         Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        var bullet = collision.gameObject.GetComponent<Bullet>();
+
+        if(bullet != null)
+        {
+            TakeDamage(bullet.Damage);
+            GameObject.Destroy(collision.gameObject);
+        }
     }
 }

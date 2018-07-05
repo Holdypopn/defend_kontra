@@ -178,13 +178,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 0
-  moveSpeed: 1
+  moveSpeed: 0.2
   jumpVelocity: 4.5
   DamageTick: 0.9
-  SwipeManager: {fileID: 0}
-  Damage: 1.5
+  Damage: 0.1
   MaxHealth: 10
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 114078724030524306}
 --- !u!114 &114165839247749818
 MonoBehaviour:
   m_ObjectHideFlags: 1
