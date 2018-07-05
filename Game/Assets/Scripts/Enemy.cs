@@ -83,7 +83,7 @@ public class Enemy : Movement, IDestructible
         }
         else
         {
-            var go = currentTile.GetDownGameObject();
+            var go = currentTile.GetGameObject(-Vector3.forward); //Get Gameobject in front
 
             if (go == null)//Nothing in Front, reach end of map
                 return;

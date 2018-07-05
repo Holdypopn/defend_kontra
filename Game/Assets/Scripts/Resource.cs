@@ -46,4 +46,16 @@ public class Resource
         transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text = Stone.ToString(); //UI Text Stone
         transform.GetChild(0).GetChild(1).GetChild(3).GetComponent<Text>().text = Ammo.ToString(); //Ui Text Ammo
     }
+
+    public void UseStone()
+    {
+        Stone--;
+        UpdateUi();
+    }
+
+    public void UseAmmo()
+    {
+        Ammo--;
+        UpdateUi();
+    }
 }

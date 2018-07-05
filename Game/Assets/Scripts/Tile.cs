@@ -97,9 +97,8 @@ public class Tile : MonoBehaviour, IDestructible
     /// For enemy, gets the down tile/player gameobject which blocks the enemy
     /// </summary>
     /// <returns></returns>
-    public GameObject GetDownGameObject()
+    public GameObject GetGameObject(Vector3 direction)
     {
-        Vector3 direction = -Vector3.forward;
 
         Vector3 halfExtents = new Vector3(0.25f, 0, 0.25f);
         Collider[] colliders = Physics.OverlapBox(transform.position + direction, halfExtents);
@@ -136,35 +135,53 @@ public class Tile : MonoBehaviour, IDestructible
         AnimateTileStatus();
     }
 
-    public void Repair(float amount)
+    public bool Repair(float amount)
     {
-        if (destructible)
+        if (destructible && currentHealth < MaxHealth)
         {
             currentHealth += amount;
 
             if (currentHealth > MaxHealth)
                 currentHealth = MaxHealth;
+
+            AnimateTileStatus();
+
+            return true;
         }
 
-        AnimateTileStatus();
+        return false;
     }
 
+    private bool wasDamaged = false;
     public void AnimateTileStatus()
     {
         int value = 100;
 
         if (currentHealth / MaxHealth <= 0.25f)
+        {
+            wasDamaged = true;
             value = 25;
+        }
         else if (currentHealth / MaxHealth <= 0.5f)
+        {
+            wasDamaged = true;
             value = 50;
+        }
         else if (currentHealth / MaxHealth <= 0.75f)
+        {
+            wasDamaged = true;
             value = 75;
+        }
+        else if (currentHealth / MaxHealth == 1f && wasDamaged)
+        {
+            GetComponent<Renderer>().material = Resources.Load<Material>("Tile/" + name);
+            wasDamaged = false;
+            return;
+        }
         else
             return;
 
-        Material material = Resources.Load<Material>("Tile/" + name + value);
-
-        GetComponent<Renderer>().material = material;
+        GetComponent<Renderer>().material = Resources.Load<Material>("Tile/" + name + value);
     }
 
     private void Destroy()

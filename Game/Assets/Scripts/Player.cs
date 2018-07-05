@@ -6,9 +6,15 @@ using UnityEngine.UI;
 
 public class Player : Movement, IDestructible
 {
-    //Defines the damage tick
+    //Defines the resource tick
     private ActionTick resourceActionTick;
     public float ResourceTick = 0.9f;
+
+    //Defines the Repair Tick
+    private ActionTick repairActionTick;
+    public float RepairTick = 0.9f;
+    
+    public float RepairEfficiencyPerStone = 0.5f;
 
     /// <summary>
     /// Resource manager
@@ -32,6 +38,7 @@ public class Player : Movement, IDestructible
         currentHealth = MaxHealth;
 
         resourceActionTick = new ActionTick(ResourceTick);
+        repairActionTick = new ActionTick(RepairTick);
 
         Resources = new Resource(StartStones, StartAmmo, transform);
     }
@@ -57,6 +64,21 @@ public class Player : Movement, IDestructible
                     }
                     break;
                 case "RepairTile":
+                    if (repairActionTick.IsAction())
+                    {
+                        var go = currentTile.GetGameObject(Vector3.forward); //Get Gameobject in front (Wall)
+
+                        if (go != null)//Wall already down when wall is null
+                        {
+                            var wall = go.GetComponent<Tile>();
+
+                            if (wall != null && Resources.Stone > 0)//Avoid enemy attack and stones available
+                            {
+                                if(wall.Repair(RepairEfficiencyPerStone))
+                                    Resources.UseStone();
+                            }
+                        }
+                    }
                     break;
                 case "BaseTile":
                     Debug.Log("BaseTile");
