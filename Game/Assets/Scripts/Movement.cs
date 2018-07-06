@@ -42,7 +42,6 @@ public class Movement : MonoBehaviour
     public void GetCurrentTile()
     {
         currentTile = GetTargetTile(gameObject);
-        currentTile.current = true;
     }
 
     public Tile GetTargetTile(GameObject target)
@@ -75,6 +74,9 @@ public class Movement : MonoBehaviour
         GetCurrentTile();
         
         Tile t = currentTile;
+
+        if (t == null) //currentile is null (Wall is broken)
+            return;
 
         selectableTiles.Add(t);
         
@@ -122,7 +124,7 @@ public class Movement : MonoBehaviour
             if (Vector3.Distance(transform.position, target) >= 0.05f)
             {
                 bool jump = transform.position.y != target.y;
-
+                
                 if (jump)
                 {
                     Jump(target);
@@ -171,12 +173,6 @@ public class Movement : MonoBehaviour
 
     protected void RemoveSelectableTiles()
     {
-        if(currentTile != null)
-        {
-            currentTile.current = false;
-            currentTile = null;
-        }
-
         foreach(Tile t in selectableTiles)
         {
             t.Reset();
@@ -247,6 +243,8 @@ public class Movement : MonoBehaviour
     void PrepareJump(Vector3 target)
     {
         float targetY = target.y;
+        float targetX = target.x;
+        float targetZ = target.z;
 
         target.y = transform.position.y;
 
@@ -255,9 +253,17 @@ public class Movement : MonoBehaviour
         //Lower than character unit -> falling
         if (transform.position.y > targetY)
         {
-            jumpState = JumpState.MoveToEdge;
+            if (transform.position.x == targetX && transform.position.z == targetZ) //Wall broken directly fall down
+            {
+                jumpState = JumpState.FallDown;
+                jumpTarget = target;
+            }
+            else
+            {
+                jumpState = JumpState.MoveToEdge;
 
-            jumpTarget = transform.position + (target - transform.position) / 2.0f;
+                jumpTarget = transform.position + (target - transform.position) / 2.0f;
+            }
         }
         else
         {

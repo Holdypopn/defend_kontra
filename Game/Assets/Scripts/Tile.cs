@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour, IDestructible
 {
     public bool walkableEnemy = false;
     public bool walkablePlayer = true;
-    public bool current = false;
     public bool destructible = false;
     public float MaxHealth = 20;
+
+    public int RowOfTile;
 
     public float currentHealth;
 
@@ -21,13 +23,13 @@ public class Tile : MonoBehaviour, IDestructible
     void Start()
     {
         currentHealth = MaxHealth;
+
+        RowOfTile = Int32.Parse(transform.parent.name.Split('(')[1].Split(')')[0]);
     }
 
     public void Reset()
     {
         adjacencyList.Clear();
-
-        current = false;
 
         parent = null;
     }
@@ -187,5 +189,10 @@ public class Tile : MonoBehaviour, IDestructible
     private void Destroy()
     {
         Destroy(gameObject);
+    }
+
+    public Tile GetWallGroundOfRow()
+    {
+        return transform.parent.Find("Tile (3)").GetComponent<Tile>(); //Tile (3) == WallTile (Ground of wall)
     }
 }

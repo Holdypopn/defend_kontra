@@ -13,12 +13,12 @@ public class Player : Movement, IDestructible
     //Defines the Repair Tick
     private ActionTick repairActionTick;
     public int RepairTick = 1000;
-    
+
     //Defines the Repair Tick
     private ActionTick shootActionTick;
     public int ShootTick = 500;
     public float Damage = 1.5f;
-    
+
     public float RepairEfficiencyPerStone = 0.5f;
 
     /// <summary>
@@ -34,6 +34,8 @@ public class Player : Movement, IDestructible
     private float currentHealth;
 
     public Image healthBar;
+
+    private Tile wallGround = null;
 
     // Use this for initialization
     void Start()
@@ -60,52 +62,57 @@ public class Player : Movement, IDestructible
 
             if (currentTile == null)//Object is deleted (Wall)
             {
-                Debug.Log("Wall down .. Fall Down..");
+                MoveToTile(wallGround);
             }
-
-            switch (currentTile.tag)
+            else
             {
-                case "WallTile":
-                    Debug.Log("WallTile");
-                    break;
-                case "ResourceTile":
-                    if(resourceActionTick.IsAction())
-                    {
-                        Resources.AddRandomResource();
-                    }
-                    break;
-                case "RepairTile":
-                    if (repairActionTick.IsAction())
-                    {
-                        var go = currentTile.GetGameObject(Vector3.forward); //Get Gameobject in front (Wall)
 
-                        if (go != null)//Wall already down when wall is null
+                switch (currentTile.tag)
+                {
+                    case "WallTile":
+                        Debug.Log("WallTile");
+                        break;
+                    case "ResourceTile":
+                        if (resourceActionTick.IsAction())
                         {
-                            var wall = go.GetComponent<Tile>();
+                            Resources.AddRandomResource();
+                        }
+                        break;
+                    case "RepairTile":
+                        if (repairActionTick.IsAction())
+                        {
+                            var go = currentTile.GetGameObject(Vector3.forward); //Get Gameobject in front (Wall)
 
-                            if (wall != null && Resources.Stone > 0)//Avoid enemy attack and stones available
+                            if (go != null)//Wall already down when wall is null
                             {
-                                if(wall.Repair(RepairEfficiencyPerStone))
-                                    Resources.UseStone();
+                                var wall = go.GetComponent<Tile>();
+
+                                if (wall != null && Resources.Stone > 0)//Avoid enemy attack and stones available
+                                {
+                                    if (wall.Repair(RepairEfficiencyPerStone))
+                                        Resources.UseStone();
+                                }
                             }
                         }
-                    }
-                    break;
-                case "BaseTile":
-                    Debug.Log("BaseTile");
-                    break;
-                case "Wall":
-                    if (shootActionTick.IsAction())
-                    {
-                        if (Resources.Ammo > 0)
+                        break;
+                    case "BaseTile":
+                        Debug.Log("BaseTile");
+                        break;
+                    case "Wall":
+                        if (shootActionTick.IsAction())
                         {
-                            int row = Int32.Parse(currentTile.transform.parent.name.Split('(')[1].Split(')')[0]);//TODO refactor read of row
-                            
-                            if(transform.GetComponent<Shoot>().Shooting(row, Damage))
-                                Resources.UseAmmo();
+                            if (Resources.Ammo > 0)
+                            {
+                                int row = Int32.Parse(currentTile.transform.parent.name.Split('(')[1].Split(')')[0]);//TODO refactor read of row
+
+                                if (transform.GetComponent<Shoot>().Shooting(row, Damage))
+                                    Resources.UseAmmo();
+                            }
                         }
-                    }
-                    break;
+
+                        wallGround = currentTile.GetWallGroundOfRow();
+                        break;
+                }
             }
         }
         else

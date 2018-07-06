@@ -181,7 +181,7 @@ MonoBehaviour:
   moveSpeed: 1
   jumpVelocity: 4.5
   DamageTick: 800
-  Damage: 1.5
+  Damage: 3
   MaxHealth: 10
   healthBar: {fileID: 114078724030524306}
 --- !u!114 &114165839247749818
