@@ -14,7 +14,7 @@ public class EnemySpawn : MonoBehaviour
     };
     //Defines the resource tick
     private ActionTick spawnActionTick;
-    public float SpawnTick = 0.9f;
+    public int SpawnTick = 10000;
 
     public GameObject Enemy;
 
@@ -55,7 +55,7 @@ public class EnemySpawn : MonoBehaviour
     {
         foreach(var item in RowEnemyMap)
         {
-            if (item.Value.Peek() == go)
+            if (item.Value.Count != 0 && item.Value.Peek() == go)
                 item.Value.Dequeue();
         }
     }

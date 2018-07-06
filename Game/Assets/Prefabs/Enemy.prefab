@@ -178,10 +178,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 0
-  moveSpeed: 0.2
+  moveSpeed: 1
   jumpVelocity: 4.5
-  DamageTick: 0.9
-  Damage: 0.1
+  DamageTick: 800
+  Damage: 1.5
   MaxHealth: 10
   healthBar: {fileID: 114078724030524306}
 --- !u!114 &114165839247749818

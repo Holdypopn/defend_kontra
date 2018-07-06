@@ -8,15 +8,15 @@ public class Player : Movement, IDestructible
 {
     //Defines the resource tick
     private ActionTick resourceActionTick;
-    public float ResourceTick = 0.9f;
+    public int ResourceTick = 1000;
 
     //Defines the Repair Tick
     private ActionTick repairActionTick;
-    public float RepairTick = 0.9f;
+    public int RepairTick = 1000;
     
     //Defines the Repair Tick
     private ActionTick shootActionTick;
-    public float ShootTick = 0.9f;
+    public int ShootTick = 500;
     public float Damage = 1.5f;
     
     public float RepairEfficiencyPerStone = 0.5f;

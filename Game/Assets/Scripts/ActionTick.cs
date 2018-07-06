@@ -2,29 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
+//TODO works for now but needs refactoring
 public class ActionTick
 {
     //Defines the damage tick
-    private float nextActionTime = 0.0f;
-    public float tick = 0.9f;
+    public int tick = 1000;
+
+    Thread t;
 
     public bool IsAction()
     {
-        if (Time.time > nextActionTime)
+        if (t == null || !t.IsAlive)
         {
-            nextActionTime += tick;
-
+            t = new Thread(new ThreadStart(wait));
+            t.Start();
             return true;
         }
-
-        return false;
+        else
+            return false;
     }
 
-    public ActionTick(float tick)
+    public ActionTick(int tick)
     {
         this.tick = tick;
+    }
+
+    private void wait()
+    {
+        Thread.Sleep(tick);
     }
 }
 

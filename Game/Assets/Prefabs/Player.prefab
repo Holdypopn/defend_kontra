@@ -382,14 +382,15 @@ MonoBehaviour:
   jumpHeight: 2
   moveSpeed: 2
   jumpVelocity: 4.5
-  ResourceTick: 0.9
-  RepairTick: 0.9
-  ShootTick: 0.9
+  ResourceTick: 1000
+  RepairTick: 1000
+  ShootTick: 500
+  Damage: 1.5
   RepairEfficiencyPerStone: 0.5
   StartStones: 5
   StartAmmo: 20
   SwipeManager: {fileID: 0}
-  MaxHealth: 7
+  MaxHealth: 4
   healthBar: {fileID: 114078724030524306}
 --- !u!114 &114675263303735958
 MonoBehaviour:

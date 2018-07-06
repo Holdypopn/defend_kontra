@@ -8,7 +8,7 @@ public class Enemy : Movement, IDestructible
 {
     //Defines the damage tick
     private ActionTick actionTick;
-    public float DamageTick = 0.9f;
+    public int DamageTick = 800;
 
     public float Damage = 1.5f;
 
