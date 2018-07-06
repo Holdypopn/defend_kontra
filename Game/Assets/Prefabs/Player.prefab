@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Projectile: {fileID: 1240094358804122, guid: 8f6206cbd549de248ab0d217209bee7d, type: 2}
-  velocity: 90
+  velocity: 40
   Offset: {x: 0, y: 0, z: 0.5}
 --- !u!114 &114149241083124626
 MonoBehaviour:
