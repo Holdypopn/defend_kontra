@@ -57,7 +57,12 @@ public class Player : Movement, IDestructible
         {
             FindSelectableTiles();
             CheckSwipe();
-            
+
+            if (currentTile == null)//Object is deleted (Wall)
+            {
+                Debug.Log("Wall down .. Fall Down..");
+            }
+
             switch (currentTile.tag)
             {
                 case "WallTile":

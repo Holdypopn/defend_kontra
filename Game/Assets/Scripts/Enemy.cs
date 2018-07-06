@@ -39,7 +39,9 @@ public class Enemy : Movement, IDestructible
         {
             try //TODO: remove try catch and return bool if player is death
             {
-                if (actionTick.IsAction())
+                if (currentTile.GetGameObject(-Vector3.forward) == null) //Gameobject is not there anymore ?? NOT WORKING TODO
+                    destructibleInFront = null;
+                else if (actionTick.IsAction())
                 {
                     destructibleInFront.TakeDamage(Damage);
                 }
