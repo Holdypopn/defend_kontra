@@ -14,7 +14,7 @@ public class EnemySpawn : MonoBehaviour
     };
     //Defines the resource tick
     private ActionTick spawnActionTick;
-    public int SpawnTick = 10000;
+    public int SpawnTick = 13000;
 
     public GameObject Enemy;
 

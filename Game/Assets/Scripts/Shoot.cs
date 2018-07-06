@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     public GameObject Projectile;
-    public float velocity = 90;
+    public float velocity = 40;
     public Vector3 Offset = new Vector3(0, 0, 0.5f);
     
     // Update is called once per frame

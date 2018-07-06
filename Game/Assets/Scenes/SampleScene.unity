@@ -396,6 +396,11 @@ Prefab:
       propertyPath: m_Name
       value: Player (0)
       objectReference: {fileID: 0}
+    - target: {fileID: 114086853174541124, guid: cdb8827ec78bd824ebf4890e2d53e2bc,
+        type: 2}
+      propertyPath: velocity
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cdb8827ec78bd824ebf4890e2d53e2bc, type: 2}
   m_IsPrefabParent: 0
@@ -615,7 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f527e52efb004e443a4744afcf63811c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnTick: 10000
+  SpawnTick: 13000
   Enemy: {fileID: 1772626201886544, guid: d4ebb894e50b6e242bdcf4345e1a5d60, type: 2}
 --- !u!1001 &1047878644
 Prefab:

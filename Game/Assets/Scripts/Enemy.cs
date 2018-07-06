@@ -115,6 +115,7 @@ public class Enemy : Movement, IDestructible
 
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Hit");
         var bullet = collision.gameObject.GetComponent<Bullet>();
 
         if(bullet != null)
