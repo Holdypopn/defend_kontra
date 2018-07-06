@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3645542c88baf1740a4d560eba537110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 1240094358804122, guid: 8f6206cbd549de248ab0d217209bee7d, type: 2}
+  Projectile: {fileID: 1064243368944706, guid: 8f6206cbd549de248ab0d217209bee7d, type: 2}
   velocity: 40
   Offset: {x: 0, y: 0, z: 0.5}
 --- !u!114 &114149241083124626

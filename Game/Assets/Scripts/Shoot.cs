@@ -19,6 +19,7 @@ public class Shoot : MonoBehaviour
 
             go.GetComponent<Bullet>().Damage = Damage;
 
+            Destroy(go, 3);
             return true;
         }
 
