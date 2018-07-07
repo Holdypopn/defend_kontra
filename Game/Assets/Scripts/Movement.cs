@@ -14,7 +14,8 @@ public class Movement : MonoBehaviour
     protected bool moving = false;
     private bool movingInit = false;
     public float jumpHeight = 2;
-    public float moveSpeed = 2;
+    public float BaseMoveSpeed = 2;
+    internal float moveSpeed;
     public float jumpVelocity = 4.5f;
 
     Vector3 velocity = new Vector3();
@@ -36,6 +37,8 @@ public class Movement : MonoBehaviour
         tiles.AddRange(GameObject.FindGameObjectsWithTag("Wall"));
 
         halfHeight = GetComponent<Collider>().bounds.extents.y;
+
+        moveSpeed = BaseMoveSpeed;
     }
 
     public void GetCurrentTile()

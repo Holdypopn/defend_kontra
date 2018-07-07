@@ -75,6 +75,7 @@ public class PlayerInformation : MonoBehaviour
     {
         if (Statistics.Pay(current.PlayerPropertys.MoveSpeedLevel * current.PlayerPropertys.MoveSpeedCost))
         {
+            current.UpdateMoveSpeed();
             current.PlayerPropertys.MoveSpeedLevel++;
 
             UpdateStats();
@@ -85,6 +86,7 @@ public class PlayerInformation : MonoBehaviour
     {
         if (Statistics.Pay(current.PlayerPropertys.MoveSpeedLevel * current.PlayerPropertys.MoveSpeedCost))
         {
+            current.UpdateHealth();
             current.PlayerPropertys.HealthLevel++;
 
             UpdateStats();
@@ -95,6 +97,7 @@ public class PlayerInformation : MonoBehaviour
     {
         if (Statistics.Pay(current.PlayerPropertys.FireRateLevel * current.PlayerPropertys.FireRateCost))
         {
+            current.UpdateFireRate();
             current.PlayerPropertys.FireRateLevel++;
 
             UpdateStats();
@@ -105,6 +108,7 @@ public class PlayerInformation : MonoBehaviour
     {
         if (Statistics.Pay(current.PlayerPropertys.DamageLevel * current.PlayerPropertys.DamageCost))
         {
+            current.UpdateDamage();
             current.PlayerPropertys.DamageLevel++;
 
             UpdateStats();
@@ -115,6 +119,7 @@ public class PlayerInformation : MonoBehaviour
     {
         if (Statistics.Pay(current.PlayerPropertys.RepairSpeedLevel * current.PlayerPropertys.RepairSpeedCost))
         {
+            current.UpdateRepairSpeed();
             current.PlayerPropertys.RepairSpeedLevel++;
 
             UpdateStats();
@@ -125,6 +130,7 @@ public class PlayerInformation : MonoBehaviour
     {
         if (Statistics.Pay(current.PlayerPropertys.RepairSpeedLevel * current.PlayerPropertys.RepairSpeedCost))
         {
+            current.UpdateResourceSpeed();
             current.PlayerPropertys.ResourceSpeedLevel++;
 
             UpdateStats();
@@ -136,7 +142,7 @@ public class PlayerPropertys
 {
     public const int MaxLevel = 15;
 
-    public float MoveSpeedPercentage = 0.02f;
+    public float MoveSpeedPercentage = 0.05f;
     public float HealthPercentage = 0.05f;
     public float FireRatePercentage = 0.05f;
     public float DamagePercentage = 0.05f;

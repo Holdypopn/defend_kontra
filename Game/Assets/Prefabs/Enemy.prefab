@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 0
-  moveSpeed: 1
+  BaseMoveSpeed: 1
   jumpVelocity: 4.5
   DamageTick: 800
   Damage: 1.5

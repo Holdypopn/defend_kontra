@@ -10,7 +10,8 @@ public class Player : Movement, IDestructible
 
     //Defines the resource tick
     private ActionTick resourceActionTick;
-    public int ResourceTick = 1000;
+    public int resourceTick;
+    public int BaseResourceTick = 1000;
 
     internal delegate void PlayerSelected(Player player);
     internal static event PlayerSelected PlayerSelect;
@@ -23,12 +24,15 @@ public class Player : Movement, IDestructible
 
     //Defines the Repair Tick
     private ActionTick repairActionTick;
-    public int RepairTick = 1000;
+    internal int repairTick;
+    public int BaseRepairTick = 1000;
 
     //Defines the Repair Tick
     private ActionTick shootActionTick;
-    public int ShootTick = 500;
-    public float Damage = 1.5f;
+    public int BaseShootTick = 500;
+    internal int shootTick;
+    internal float damage;
+    public float BaseDamage = 1.5f;
 
     public float RepairEfficiencyPerStone = 0.5f;
 
@@ -41,7 +45,8 @@ public class Player : Movement, IDestructible
 
     public Swipe SwipeManager;
 
-    public float MaxHealth = 4;
+    public float BaseMaxHealth = 4;
+    internal float maxHealth;
     private float currentHealth;
 
     public Image healthBar;
@@ -51,13 +56,18 @@ public class Player : Movement, IDestructible
     // Use this for initialization
     void Start()
     {
+        maxHealth = BaseMaxHealth;
+        shootTick = BaseShootTick;
+        repairTick = BaseRepairTick;
+        resourceTick = BaseResourceTick;
+        damage = BaseDamage;
+        currentHealth = maxHealth;
+        
         Init();
-
-        currentHealth = MaxHealth;
-
-        resourceActionTick = new ActionTick(ResourceTick);
-        repairActionTick = new ActionTick(RepairTick);
-        shootActionTick = new ActionTick(ShootTick);
+        
+        resourceActionTick = new ActionTick(resourceTick);
+        repairActionTick = new ActionTick(repairTick);
+        shootActionTick = new ActionTick(shootTick);
 
         Resources = new Resource(StartStones, StartAmmo, transform);
     }
@@ -121,7 +131,7 @@ public class Player : Movement, IDestructible
                             {
                                 int row = Int32.Parse(currentTile.transform.parent.name.Split('(')[1].Split(')')[0]);//TODO refactor read of row
 
-                                if (transform.GetComponent<Shoot>().Shooting(row, Damage))
+                                if (transform.GetComponent<Shoot>().Shooting(row, damage))
                                 {
                                     OnInformationUpdated();
                                     Resources.UseAmmo();
@@ -177,7 +187,7 @@ public class Player : Movement, IDestructible
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        healthBar.fillAmount = currentHealth / MaxHealth;
+        healthBar.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
         {
@@ -201,5 +211,39 @@ public class Player : Movement, IDestructible
     {
         if (PlayerDies != null)
             PlayerDies(this);
+    }
+
+    public void UpdateMoveSpeed()
+    {
+        moveSpeed = BaseMoveSpeed + (BaseMoveSpeed * PlayerPropertys.MoveSpeedLevel * PlayerPropertys.MoveSpeedPercentage);
+    }
+
+    public void UpdateHealth()
+    {
+        maxHealth = BaseMaxHealth + (BaseMaxHealth * PlayerPropertys.HealthLevel * PlayerPropertys.HealthPercentage);
+        healthBar.fillAmount = currentHealth / maxHealth;
+    }
+
+    public void UpdateFireRate()
+    {
+        shootTick = BaseShootTick - (int)(BaseShootTick * PlayerPropertys.FireRateLevel * PlayerPropertys.FireRatePercentage);
+        shootActionTick = new ActionTick(shootTick);
+    }
+
+    public void UpdateDamage()
+    {
+        damage = BaseDamage + (BaseDamage * PlayerPropertys.DamageLevel * PlayerPropertys.DamagePercentage);
+    }
+
+    public void UpdateRepairSpeed()
+    {
+        repairTick = BaseRepairTick - (int)(BaseRepairTick * PlayerPropertys.RepairSpeedLevel * PlayerPropertys.RepairSpeedPercentage);
+        repairActionTick = new ActionTick(shootTick);
+    }
+
+    public void UpdateResourceSpeed()
+    {
+        resourceTick = BaseResourceTick - (int)(BaseResourceTick * PlayerPropertys.ResourceSpeedLevel * PlayerPropertys.ResourceSpeedPercentage);
+        resourceActionTick = new ActionTick(resourceTick);
     }
 }
