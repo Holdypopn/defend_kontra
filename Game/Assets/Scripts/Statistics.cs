@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Statistics : MonoBehaviour
 {
     public static int killCount = 0;
-    public static float Credits = 0;
+    public static float Credits = 100000;
     private static Transform t;
 	// Use this for initialization
 	void Start ()

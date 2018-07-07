@@ -195,4 +195,14 @@ public class Tile : MonoBehaviour, IDestructible
     {
         return transform.parent.Find("Tile (3)").GetComponent<Tile>(); //Tile (3) == WallTile (Ground of wall)
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        var bullet = collision.gameObject.GetComponent<Bullet>();
+
+        if (bullet != null)
+        {
+            GameObject.Destroy(collision.gameObject);
+        }
+    }
 }
