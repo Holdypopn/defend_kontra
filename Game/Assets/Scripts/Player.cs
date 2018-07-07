@@ -155,8 +155,6 @@ public class Player : Movement, IDestructible
         {
             if (t != null)
             {
-                PlayerSelect(this);
-
                 //Move targets
                 MoveToTile(t);
             }

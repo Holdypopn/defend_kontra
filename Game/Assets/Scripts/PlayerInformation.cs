@@ -10,6 +10,7 @@ public class PlayerInformation : MonoBehaviour
     void Start()
     {
         Player.PlayerSelect += OnPlayerSelect;
+        gameObject.SetActive(false);
     }
 
     private void OnPlayerSelect(Player player)
@@ -25,6 +26,7 @@ public class PlayerInformation : MonoBehaviour
         player.InformationUpdated += OnInformationUpdated;
         player.PlayerDies += OnPlayerDies;
         UpdateStats();
+        gameObject.SetActive(true);
     }
 
     private void OnInformationUpdated(Player p)
@@ -37,6 +39,7 @@ public class PlayerInformation : MonoBehaviour
         p.InformationUpdated -= OnInformationUpdated;
         p.PlayerDies -= OnPlayerDies;
         current = null;
+        gameObject.SetActive(false);
     }
 
     private void UpdateStats()
