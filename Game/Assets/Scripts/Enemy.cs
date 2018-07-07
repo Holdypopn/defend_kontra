@@ -111,6 +111,10 @@ public class Enemy : Movement, IDestructible
 
     private void Die()
     {
+        if (moving) //Reset tile which is in use
+        {
+            Path.Peek().MovementTo = false;
+        }
         EnemySpawn.RemoveGameObject(gameObject);
         Destroy(gameObject);
     }

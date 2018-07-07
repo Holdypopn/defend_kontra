@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour, IDestructible
     public bool walkablePlayer = true;
     public bool destructible = false;
     public float MaxHealth = 20;
-
+    public bool MovementTo = false;
     public int RowOfTile;
 
     public float currentHealth;
