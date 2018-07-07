@@ -15,6 +15,7 @@ public class Swipe : MonoBehaviour
     public bool SwipeRight { get { return swipeRight; } }
     public bool SwipeUp { get { return swipeUp; } }
     public bool SwipeDown { get { return swipeDown; } }
+    public bool Tap { get { return tap; } }
 
     private void Update()
     {
@@ -61,6 +62,20 @@ public class Swipe : MonoBehaviour
                 swipeDelta = Input.touches[0].position - startTouch;
             else if (Input.GetMouseButton(0))
                 swipeDelta = (Vector2)Input.mousePosition - startTouch;
+        }
+        else if(tap)
+        {
+            //Get selected Player
+            Ray ray = Camera.main.ScreenPointToRay(startTouch);
+
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.tag == "Player")
+                {
+                    SelectedPlayer = hit.collider.GetComponent<Player>();
+                }
+            }
         }
 
         //Did we cross the deadzone

@@ -16,7 +16,7 @@ public class Statistics : MonoBehaviour
     private void OnEnemyKilled(EnemyKillEventArgs args)
     {
         killCount++;
-        Credits += args.Health;
+        Credits += args.Enemy.MaxHealth;
         transform.Find("KilledEnemies").Find("Count").GetComponent<Text>().text = killCount.ToString();
         transform.Find("Credits").Find("Count").GetComponent<Text>().text = Credits.ToString();
     }

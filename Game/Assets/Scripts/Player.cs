@@ -10,6 +10,15 @@ public class Player : Movement, IDestructible
     private ActionTick resourceActionTick;
     public int ResourceTick = 1000;
 
+    internal delegate void PlayerSelected(Player player);
+    internal static event PlayerSelected PlayerSelect;
+
+    internal delegate void InformationUpdate(Player player);
+    internal event InformationUpdate InformationUpdated;
+
+    internal delegate void PlayerDie(Player player);
+    internal event PlayerDie PlayerDies;
+
     //Defines the Repair Tick
     private ActionTick repairActionTick;
     public int RepairTick = 1000;
@@ -24,7 +33,7 @@ public class Player : Movement, IDestructible
     /// <summary>
     /// Resource manager
     /// </summary>
-    private Resource Resources;
+    public Resource Resources;
     public int StartStones = 5;
     public int StartAmmo = 20;
 
@@ -59,6 +68,7 @@ public class Player : Movement, IDestructible
         {
             FindSelectableTiles();
             CheckSwipe();
+            CheckTab();
 
             if (currentTile == null)//Object is deleted (Wall)
             {
@@ -76,6 +86,7 @@ public class Player : Movement, IDestructible
                         if (resourceActionTick.IsAction())
                         {
                             Resources.AddRandomResource();
+                            OnInformationUpdated();
                         }
                         break;
                     case "RepairTile":
@@ -90,7 +101,10 @@ public class Player : Movement, IDestructible
                                 if (wall != null && Resources.Stone > 0)//Avoid enemy attack and stones available
                                 {
                                     if (wall.Repair(RepairEfficiencyPerStone))
+                                    {
+                                        OnInformationUpdated();
                                         Resources.UseStone();
+                                    }
                                 }
                             }
                         }
@@ -106,7 +120,10 @@ public class Player : Movement, IDestructible
                                 int row = Int32.Parse(currentTile.transform.parent.name.Split('(')[1].Split(')')[0]);//TODO refactor read of row
 
                                 if (transform.GetComponent<Shoot>().Shooting(row, Damage))
+                                {
+                                    OnInformationUpdated();
                                     Resources.UseAmmo();
+                                }
                             }
                         }
 
@@ -136,11 +153,23 @@ public class Player : Movement, IDestructible
 
         if (SwipeManager.SelectedPlayer == this)
         {
-            SwipeManager.SelectedPlayer = null;
             if (t != null)
             {
+                PlayerSelect(this);
+
                 //Move targets
                 MoveToTile(t);
+            }
+        }
+    }
+
+    void CheckTab()
+    {
+        if (SwipeManager.Tap && SwipeManager.SelectedPlayer == this)
+        {
+            if (PlayerSelect != null)
+            {
+                PlayerSelect(this);
             }
         }
     }
@@ -158,6 +187,19 @@ public class Player : Movement, IDestructible
 
     private void Die()
     {
+        OnPlayerDies();
         Destroy(gameObject);
+    }
+
+    private void OnInformationUpdated()
+    {
+        if (InformationUpdated != null)
+            InformationUpdated(this);
+    }
+
+    private void OnPlayerDies()
+    {
+        if (PlayerDies != null)
+            PlayerDies(this);
     }
 }

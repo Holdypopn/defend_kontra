@@ -113,6 +113,7 @@ public class Enemy : Movement, IDestructible
 
     private void Die()
     {
+        Debug.Log("Die!");
         if (moving) //Reset tile which is in use
         {
             Path.Peek().MovementTo = false;
@@ -139,17 +140,17 @@ public class Enemy : Movement, IDestructible
     {
         if(EnemyKilled != null)
         {
-            EnemyKilled(new EnemyKillEventArgs(MaxHealth));
+            EnemyKilled(new EnemyKillEventArgs(this));
         }
     }
 }
 
 public class EnemyKillEventArgs : EventArgs
 {
-    internal float Health = 0;
+    internal Enemy Enemy;
 
-    public EnemyKillEventArgs (float health)
+    public EnemyKillEventArgs (Enemy enemy)
     {
-        this.Health = health;
+        this.Enemy = enemy;
     }
 }
