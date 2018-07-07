@@ -13,7 +13,7 @@ public class Enemy : Movement, IDestructible
     public float Damage = 1.5f;
 
     public float MaxHealth = 10;
-    private float currentHealth;
+    internal float CurrentHealth;
 
     /// <summary>
     /// Is set when a destructible is in front of enemy
@@ -27,7 +27,7 @@ public class Enemy : Movement, IDestructible
     {
         Init();
 
-        currentHealth = MaxHealth;
+        CurrentHealth = MaxHealth;
 
         actionTick = new ActionTick(DamageTick);
     }
@@ -100,10 +100,10 @@ public class Enemy : Movement, IDestructible
 
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        healthBar.fillAmount = currentHealth / MaxHealth;
+        CurrentHealth -= amount;
+        healthBar.fillAmount = CurrentHealth / MaxHealth;
 
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }
