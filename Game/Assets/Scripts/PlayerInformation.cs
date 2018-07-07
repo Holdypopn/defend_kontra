@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,6 +65,11 @@ public class PlayerInformation : MonoBehaviour
         SetUiPropertys("Damage", props.DamageLevel, props.DamageCost * props.DamageLevel, (int)(100 * props.DamagePercentage));
         SetUiPropertys("RepairSpeed", props.RepairSpeedLevel, props.RepairSpeedCost * props.RepairSpeedLevel, (int)(100 * props.RepairSpeedPercentage));
         SetUiPropertys("ResourceSpeed", props.ResourceSpeedLevel, props.ResourceSpeedCost * props.ResourceSpeedLevel, (int)(100 * props.ResourceSpeedPercentage));
+        SetUiPropertys("Heal", 0, props.HealCost, (int)(100 * props.HealPercentage));
+
+        //Disable Heal when full live
+        t.Find("PlayerPropertys").Find("Heal").Find("Upgrade").GetComponent<Button>().gameObject.SetActive( current.currentHealth < current.maxHealth && Statistics.Credits >= props.HealCost);
+
     }
 
     private static void SetUiPropertys(string name, int level, int cost, int percentage)
@@ -141,6 +147,27 @@ public class PlayerInformation : MonoBehaviour
             UpdateStats();
         }
     }
+
+    public void Heal()
+    {
+        if (Statistics.Pay(current.PlayerPropertys.HealCost))
+        {
+            current.Heal();
+
+            //TODO Cooldown
+            //transform.Find("PlayerPropertys").Find("Heal").Find("Upgrade").GetComponent<Button>().gameObject.SetActive(false);
+            //Thread t = new Thread(new ThreadStart(CooldownHeal));
+            //t.Start();
+
+            UpdateStats();
+        }
+    }
+
+    private void CooldownHeal()
+    {
+        Thread.Sleep(10000);
+        UpdateStats();
+    }
 }
 
 public class PlayerPropertys
@@ -153,6 +180,7 @@ public class PlayerPropertys
     public float DamagePercentage = 0.05f;
     public float RepairSpeedPercentage = 0.05f;
     public float ResourceSpeedPercentage = 0.05f;
+    public float HealPercentage = 0.10f;
 
     public int MoveSpeedCost = 5;
     public int HealthCost = 5;
@@ -160,6 +188,7 @@ public class PlayerPropertys
     public int DamageCost = 5;
     public int RepairSpeedCost = 5;
     public int ResourceSpeedCost = 5;
+    public int HealCost = 25;
 
     public int MoveSpeedLevel = 1;
     public int HealthLevel = 1;

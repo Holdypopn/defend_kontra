@@ -197,6 +197,17 @@ public class Player : Movement, IDestructible
         }
     }
 
+    public void Heal()
+    {
+        currentHealth += PlayerPropertys.HealPercentage * maxHealth;
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.fillAmount = currentHealth / maxHealth;
+        PlayerInformation.UpdateStats();
+    }
+
     private void Die()
     {
         OnPlayerDies();
