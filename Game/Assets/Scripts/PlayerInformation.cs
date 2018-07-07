@@ -47,9 +47,14 @@ public class PlayerInformation : MonoBehaviour
 
     public static void UpdateStats()
     {
+        if (current == null)
+            return;
         //Inventory
         t.Find("Resource").Find("StoneCount").GetComponent<Text>().text = current.Resources.Stone.ToString();
         t.Find("Resource").Find("AmmoCount").GetComponent<Text>().text = current.Resources.Ammo.ToString();
+
+        //Health
+        t.Find("HealthBG").Find("HealthBar").GetComponent<Image>().fillAmount = current.currentHealth / current.maxHealth;
 
         //PlayerPropertys
         PlayerPropertys props = current.PlayerPropertys;

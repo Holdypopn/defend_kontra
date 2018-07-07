@@ -47,7 +47,7 @@ public class Player : Movement, IDestructible
 
     public float BaseMaxHealth = 4;
     internal float maxHealth;
-    private float currentHealth;
+    public float currentHealth;
 
     public Image healthBar;
 
@@ -188,6 +188,8 @@ public class Player : Movement, IDestructible
     {
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / maxHealth;
+
+        PlayerInformation.UpdateStats();
 
         if (currentHealth <= 0)
         {
