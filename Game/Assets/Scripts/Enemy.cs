@@ -15,7 +15,7 @@ public class Enemy : Movement, IDestructible
     public float MaxHealth = 10;
     internal float CurrentHealth;
 
-    internal delegate void EnemyKill();
+    internal delegate void EnemyKill(EnemyKillEventArgs args);
     internal static event EnemyKill EnemyKilled;
     /// <summary>
     /// Is set when a destructible is in front of enemy
@@ -118,9 +118,9 @@ public class Enemy : Movement, IDestructible
             Path.Peek().MovementTo = false;
         }
         EnemySpawn.RemoveGameObject(gameObject);
-        Destroy(gameObject);
-
         OnEnemyKilled();
+
+        Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -139,7 +139,17 @@ public class Enemy : Movement, IDestructible
     {
         if(EnemyKilled != null)
         {
-            EnemyKilled();
+            EnemyKilled(new EnemyKillEventArgs(MaxHealth));
         }
+    }
+}
+
+public class EnemyKillEventArgs : EventArgs
+{
+    internal float Health = 0;
+
+    public EnemyKillEventArgs (float health)
+    {
+        this.Health = health;
     }
 }
