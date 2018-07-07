@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Player : Movement, IDestructible
 {
+    public PlayerPropertys PlayerPropertys = new PlayerPropertys();
+
     //Defines the resource tick
     private ActionTick resourceActionTick;
     public int ResourceTick = 1000;

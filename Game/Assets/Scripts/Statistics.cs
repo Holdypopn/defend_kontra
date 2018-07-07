@@ -5,19 +5,40 @@ using UnityEngine.UI;
 
 public class Statistics : MonoBehaviour
 {
-    private int killCount = 0;
-    private float Credits = 0;
+    public static int killCount = 0;
+    public static float Credits = 0;
+    private static Transform t;
 	// Use this for initialization
 	void Start ()
     {
         Enemy.EnemyKilled += OnEnemyKilled;
+        t = transform;
 	}
 
     private void OnEnemyKilled(EnemyKillEventArgs args)
     {
         killCount++;
         Credits += args.Enemy.MaxHealth;
-        transform.Find("KilledEnemies").Find("Count").GetComponent<Text>().text = killCount.ToString();
-        transform.Find("Credits").Find("Count").GetComponent<Text>().text = Credits.ToString();
+        UpdateUi(transform);
+        PlayerInformation.UpdateStats();
+    }
+
+    private static void UpdateUi(Transform t)
+    {
+        t.Find("KilledEnemies").Find("Count").GetComponent<Text>().text = killCount.ToString();
+        t.Find("Credits").Find("Count").GetComponent<Text>().text = Credits.ToString();
+    }
+
+
+    public static bool Pay(float credits)
+    {
+        if (credits <= Credits)
+        {
+            Credits -= credits;
+            UpdateUi(t);
+            return true;
+        }
+
+        return false;
     }
 }
