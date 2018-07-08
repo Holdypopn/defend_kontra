@@ -31,7 +31,8 @@ public class Movement : MonoBehaviour
     {
         tiles.AddRange(GameObject.FindGameObjectsWithTag("EnemyTile"));
         tiles.AddRange(GameObject.FindGameObjectsWithTag("WallTile"));
-        tiles.AddRange(GameObject.FindGameObjectsWithTag("ResourceTile"));
+        tiles.AddRange(GameObject.FindGameObjectsWithTag("StoneResourceTile"));
+        tiles.AddRange(GameObject.FindGameObjectsWithTag("AmmoResourceTile"));
         tiles.AddRange(GameObject.FindGameObjectsWithTag("RepairTile"));
         tiles.AddRange(GameObject.FindGameObjectsWithTag("BaseTile"));
         tiles.AddRange(GameObject.FindGameObjectsWithTag("Wall"));

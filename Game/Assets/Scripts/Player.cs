@@ -94,10 +94,17 @@ public class Player : Movement, IDestructible
                     case "WallTile":
                         Debug.Log("WallTile");
                         break;
-                    case "ResourceTile":
+                    case "StoneResourceTile":
                         if (resourceActionTick.IsAction())
                         {
-                            Resources.AddRandomResource();
+                            Resources.AddStone();
+                            OnInformationUpdated();
+                        }
+                        break;
+                    case "AmmoResourceTile":
+                        if (resourceActionTick.IsAction())
+                        {
+                            Resources.AddAmmo();
                             OnInformationUpdated();
                         }
                         break;
@@ -177,6 +184,7 @@ public class Player : Movement, IDestructible
     {
         if (SwipeManager.Tap && SwipeManager.SelectedPlayer == this)
         {
+            SwipeManager.SelectedPlayer = null;
             if (PlayerSelect != null)
             {
                 PlayerSelect(this);

@@ -10,7 +10,8 @@ public class EnemySpawn : MonoBehaviour
         {0, new Queue<GameObject>() },
         {1, new Queue<GameObject>() },
         {2, new Queue<GameObject>() },
-        {3, new Queue<GameObject>() }
+        {3, new Queue<GameObject>() },
+        {4, new Queue<GameObject>() },
     };
     //Defines the resource tick
     private ActionTick spawnActionTick;
@@ -32,7 +33,7 @@ public class EnemySpawn : MonoBehaviour
         if (spawnActionTick.IsAction())
         {
             System.Random r = new System.Random();
-            SpawnEnemy(r.Next(0, 4));
+            SpawnEnemy(r.Next(0, 5));
         }
     }
 
@@ -43,7 +44,7 @@ public class EnemySpawn : MonoBehaviour
         {
             if (index == row)
             {
-                GameObject go = Instantiate(Enemy, child.GetChild(9).position + new Vector3(0, 1.1f), Quaternion.identity); //TODO: child.GetChild(9) ///TODO 1.1f Player size
+                GameObject go = Instantiate(Enemy, child.GetChild(16).position + new Vector3(0, 1.1f), Quaternion.identity); //TODO: child.GetChild(9) ///TODO 1.1f Player size
                 RowEnemyMap[index].Enqueue(go);
             }
 

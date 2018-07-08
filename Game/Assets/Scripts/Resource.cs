@@ -8,54 +8,40 @@ public class Resource
 {
     public int Stone;
     public int Ammo;
-    private Transform transform;
 
     public Resource(int stone, int ammo, Transform transform)
     {
         Stone = stone;
         Ammo = ammo;
-        this.transform = transform;
 
-        UpdateUi();
+        //UpdateUi();
     }
 
-    internal void AddRandomResource()
+    internal void AddStone()
     {
-        System.Random rnd = new System.Random();
-        int number = rnd.Next(1, 4);
-
-        switch (number)
-        {
-            case 1:
-                Ammo++;
-                Debug.Log("Add Ammo");
-                break;
-            case 2:
-                Stone++;
-                Debug.Log("Add Stone");
-                break;
-            case 3://Fail nothing
-                break;
-        }
-
-        UpdateUi();
+        Stone++;
     }
 
-    private void UpdateUi()
-    {
-        transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text = Stone.ToString(); //UI Text Stone
-        transform.GetChild(0).GetChild(1).GetChild(3).GetComponent<Text>().text = Ammo.ToString(); //Ui Text Ammo
-    }
+    //private void UpdateUi()
+    //{
+    //    transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text = Stone.ToString(); //UI Text Stone
+    //    transform.GetChild(0).GetChild(1).GetChild(3).GetComponent<Text>().text = Ammo.ToString(); //Ui Text Ammo
+    //}
 
     public void UseStone()
     {
         Stone--;
-        UpdateUi();
+        //UpdateUi();
     }
 
     public void UseAmmo()
     {
         Ammo--;
-        UpdateUi();
+        //UpdateUi();
+    }
+
+    internal void AddAmmo()
+    {
+        Ammo++;
     }
 }

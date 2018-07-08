@@ -10,6 +10,7 @@ public class Shoot : MonoBehaviour
 
     private bool bulletIsOnWay;
     private float oldDamage;
+    Enemy enemy;
 
     private bool init = true;
     private float temporaryLive;
@@ -17,11 +18,18 @@ public class Shoot : MonoBehaviour
     // Update is called once per frame
     public bool Shooting(int row, float Damage)
     {
+        //New enemy
+        if(EnemySpawn.RowEnemyMap[row].Count != 0 && enemy != EnemySpawn.RowEnemyMap[row].Peek().GetComponent<Enemy>())
+        {
+            init = true;
+        }
+
         if (EnemySpawn.RowEnemyMap[row].Count != 0)
         {
             if (init)
             {
                 temporaryLive = EnemySpawn.RowEnemyMap[row].Peek().GetComponent<Enemy>().CurrentHealth;
+                enemy = EnemySpawn.RowEnemyMap[row].Peek().GetComponent<Enemy>();
                 init = false;
             }
             if (temporaryLive <= 0) //Bullet is on the way which kills the player

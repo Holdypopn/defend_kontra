@@ -9,7 +9,7 @@ public class Tile : MonoBehaviour, IDestructible
     public bool destructible = false;
     public float MaxHealth = 20;
     public bool MovementTo = false;
-    public int RowOfTile;
+    //public int RowOfTile;
 
     public float currentHealth;
 
@@ -24,7 +24,7 @@ public class Tile : MonoBehaviour, IDestructible
     {
         currentHealth = MaxHealth;
 
-        RowOfTile = Int32.Parse(transform.parent.name.Split('(')[1].Split(')')[0]);
+        //RowOfTile = Int32.Parse(transform.parent.name.Split('(')[1].Split(')')[0]);
     }
 
     public void Reset()

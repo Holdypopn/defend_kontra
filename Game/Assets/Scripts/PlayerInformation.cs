@@ -68,7 +68,7 @@ public class PlayerInformation : MonoBehaviour
         SetUiPropertys("Heal", 0, props.HealCost, (int)(100 * props.HealPercentage));
 
         //Disable Heal when full live
-        t.Find("PlayerPropertys").Find("Heal").Find("Upgrade").GetComponent<Button>().gameObject.SetActive( current.currentHealth < current.maxHealth && Statistics.Credits >= props.HealCost);
+        t.Find("PlayerPropertys").Find("ScrollContainer").Find("Heal").GetComponent<Button>().enabled = current.currentHealth < current.maxHealth && Statistics.Credits >= props.HealCost;
 
     }
 
@@ -76,10 +76,12 @@ public class PlayerInformation : MonoBehaviour
     {
         string l = level < PlayerPropertys.MaxLevel ? level.ToString() : "Max";
         string c = level < PlayerPropertys.MaxLevel ? cost.ToString() : "";
-        t.Find("PlayerPropertys").Find(name).Find("Level").GetComponent<Text>().text = l;
-        t.Find("PlayerPropertys").Find(name).Find("Cost").GetComponent<Text>().text = c;
-        t.Find("PlayerPropertys").Find(name).Find("Upgrade").Find("Text").GetComponent<Text>().text = "+ " + percentage.ToString() + "%";
-        t.Find("PlayerPropertys").Find(name).Find("Upgrade").GetComponent<Button>().gameObject.SetActive(level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost);
+
+        string text = name +"\n";
+        text += "Level: " + l;
+        text += "\nCost: " + c;
+        t.Find("PlayerPropertys").Find("ScrollContainer").Find(name).Find("Text").GetComponent<Text>().text = text; ;
+        t.Find("PlayerPropertys").Find("ScrollContainer").Find(name).GetComponent<Button>().enabled = level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost;
     }
 
     public void UpgradeMoveSpeed()

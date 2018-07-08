@@ -10,7 +10,8 @@ public class Tools
     {
         DoMaterialAssignment("EnemyTile");
         DoMaterialAssignment("WallTile");
-        DoMaterialAssignment("ResourceTile");
+        DoMaterialAssignment("StoneResourceTile");
+        DoMaterialAssignment("AmmoResourceTile");
         DoMaterialAssignment("RepairTile");
         DoMaterialAssignment("BaseTile");
         DoMaterialAssignment("Wall");
