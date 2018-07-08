@@ -162,13 +162,16 @@ public class Player : Movement, IDestructible
         Tile t = null;
 
         if (SwipeManager.SwipeDown)
-            t = currentTile.GetDownNeighbour(jumpHeight);
-        if (SwipeManager.SwipeLeft)
-            t = currentTile.GetLeftNeighbour(jumpHeight);
-        if (SwipeManager.SwipeRight)
             t = currentTile.GetRightNeighbour(jumpHeight);
-        if (SwipeManager.SwipeUp)
+
+        if (SwipeManager.SwipeLeft)
+            t = currentTile.GetDownNeighbour(jumpHeight);
+
+        if (SwipeManager.SwipeRight)
             t = currentTile.GetUpNeighbour(jumpHeight);
+
+        if (SwipeManager.SwipeUp)
+            t = currentTile.GetLeftNeighbour(jumpHeight);
 
         if (SwipeManager.SelectedPlayer == this)
         {
