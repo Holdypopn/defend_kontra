@@ -75,14 +75,14 @@ public class Movement : MonoBehaviour
     {
         ComputeAdjacencyList(isEnemy);
         GetCurrentTile();
-        
+
         Tile t = currentTile;
 
         if (t == null) //currentile is null (Wall is broken)
             return;
 
         selectableTiles.Add(t);
-        
+
         foreach (Tile tile in t.adjacencyList)
         {
             tile.parent = t;
@@ -102,13 +102,13 @@ public class Movement : MonoBehaviour
 
         Tile next = tile;
 
-        while(next != null)
+        while (next != null)
         {
             Path.Push(next);
             next = next.parent;
         }
     }
-
+    private float oldDistance = float.MaxValue;
     public void Move()
     {
         if (Path.Count > 0)
@@ -117,40 +117,47 @@ public class Movement : MonoBehaviour
             Vector3 target = t.transform.position;
 
             t.MovementTo = true;
-            
+
             //Calculate the units position on top on the target tile
             target.y += halfHeight + t.GetComponent<Collider>().bounds.extents.y;
 
-            if (Vector3.Distance(transform.position, target) >= 0.05f)
+            var d = Vector3.Distance(transform.position, target);
+            if (oldDistance >= d)
             {
                 bool jump = transform.position.y != target.y;
-                
+
                 if (jump)
                 {
+                    if (JumpState.MoveToCenter == jumpState)
+                        oldDistance = d;
+
                     Jump(target);
                 }
                 else
                 {
+                    oldDistance = d;
                     CalculateHeading(target);
                     SetHorizontalVelocity();
                 }
                 transform.forward = heading;
                 transform.position += velocity * Time.deltaTime;
 
-                //Rotate Healthbar
-                if (!movingInit)
-                {
-                    transform.GetChild(0).GetComponent<HealthBarRotation>().Refresh();
-                    movingInit = true;
-                }
+                transform.GetChild(0).GetComponent<HealthBarRotation>().Refresh();
             }
             else
             {
+                //Rotate
+                Quaternion q = Quaternion.FromToRotation(transform.right, new Vector3(1, 0, 0));
+                transform.rotation = q * transform.rotation;
+                transform.GetChild(0).GetComponent<HealthBarRotation>().Refresh();
+
                 //Tile center reached
                 transform.position = target;
                 Path.Pop();
                 t.MovementTo = false;
                 movingInit = false;
+                jumpState = JumpState.None;
+                oldDistance = float.MaxValue;
             }
         }
         else
@@ -173,7 +180,7 @@ public class Movement : MonoBehaviour
 
     protected void RemoveSelectableTiles()
     {
-        foreach(Tile t in selectableTiles)
+        foreach (Tile t in selectableTiles)
         {
             t.Reset();
         }
@@ -182,7 +189,7 @@ public class Movement : MonoBehaviour
 
     void Jump(Vector3 target)
     {
-        switch(jumpState)
+        switch (jumpState)
         {
             case JumpState.FallDown:
                 FallDownward(target);
@@ -191,7 +198,10 @@ public class Movement : MonoBehaviour
                 JumpUpward(target);
                 break;
             case JumpState.MoveToEdge:
-                MoveToEdge();
+                MoveToEdge(target);
+                break;
+            case JumpState.MoveToCenter:
+                MoveToCenter(target);
                 break;
             default:
                 PrepareJump(target);
@@ -199,15 +209,29 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void MoveToEdge()
+    void MoveToEdge(Vector3 target)
     {
-        if(Vector3.Distance(transform.position, jumpTarget) >= 0.05f)
+        Debug.Log("MoveToEdge");
+        //Wenn runter und z ist größer als zielblock
+        bool a = (transform.position.y > target.y) && transform.position.z > target.z + 0.5 - transform.localScale.x / 2;
+
+        //Wenn rauf und z ist kleiner als zielblock
+        bool b = (transform.position.y < target.y) && transform.position.z < target.z - 0.5 - transform.localScale.x / 2;
+
+        Debug.Log("A: " + a);
+        Debug.Log("B: " + b);
+
+        if (a || b)
         {
             SetHorizontalVelocity();
         }
         else
         {
-            jumpState = JumpState.FallDown;
+            if (transform.position.y > target.y)
+                jumpState = JumpState.FallDown;
+            else
+                jumpState = JumpState.JumpUp;
+
 
             velocity /= 5.0f;
             velocity.y = 1.5f;
@@ -216,21 +240,33 @@ public class Movement : MonoBehaviour
 
     void JumpUpward(Vector3 target)
     {
-        velocity += Physics.gravity * Time.deltaTime;
+        Debug.Log("JumpUpward");
 
-        if(transform.position.y > target.y)
+        var h = new Vector3(heading.x, 2, 0);
+
+        velocity = h * moveSpeed / 3.0f;
+
+        //velocity += Physics.gravity * Time.deltaTime;
+
+        if (transform.position.y > target.y)
         {
-            jumpState = JumpState.FallDown;
+            Debug.Log("HÖHÖHHÖÖHÖHÖÖ");
+            jumpState = JumpState.MoveToCenter;
         }
     }
 
     void FallDownward(Vector3 target)
     {
-        velocity += Physics.gravity * Time.deltaTime;
 
-        if(transform.position.y <= target.y)
+        Debug.Log("FallDownward");
+
+        var h = new Vector3(heading.x, -2, 0);
+
+        velocity = h * moveSpeed / 3.0f;
+        
+        if (transform.position.y <= target.y)
         {
-            jumpState = JumpState.None;
+            jumpState = JumpState.MoveToCenter;
 
             Vector3 p = transform.position;
             p.y = target.y;
@@ -240,8 +276,20 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void MoveToCenter(Vector3 target)
+    {
+        Debug.Log("MoveToCenter");
+        velocity += Physics.gravity * Time.deltaTime;
+
+        var h = new Vector3(heading.x, 0, heading.z);
+
+        velocity = h * moveSpeed / 3.0f;
+    }
+
     void PrepareJump(Vector3 target)
     {
+        Debug.Log("PrepareJump");
+
         float targetY = target.y;
         float targetX = target.x;
         float targetZ = target.z;
@@ -250,38 +298,17 @@ public class Movement : MonoBehaviour
 
         CalculateHeading(target);
 
-        //Lower than character unit -> falling
-        if (transform.position.y > targetY)
-        {
-            if (transform.position.x == targetX && transform.position.z == targetZ) //Wall broken directly fall down
-            {
-                jumpState = JumpState.FallDown;
-                jumpTarget = target;
-            }
-            else
-            {
-                jumpState = JumpState.MoveToEdge;
-
-                jumpTarget = transform.position + (target - transform.position) / 2.0f;
-            }
-        }
-        else
-        {
-            jumpState = JumpState.JumpUp;
-
-            velocity = heading * moveSpeed / 3.0f;
-
-            float difference = transform.position.y;
-                        
-            velocity.y = jumpVelocity * (0.5f + difference / 2.0f);
-        }
+        jumpState = JumpState.MoveToEdge;
     }
+
+
 
     public enum JumpState
     {
         FallDown,
         MoveToEdge,
         JumpUp,
+        MoveToCenter,
         None
     }
 }
