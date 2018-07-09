@@ -44,6 +44,7 @@ public class Player : Movement, IDestructible
     public int StartAmmo = 20;
 
     public Swipe SwipeManager;
+    private Animator animator;
 
     public float BaseMaxHealth = 4;
     internal float maxHealth;
@@ -70,6 +71,9 @@ public class Player : Movement, IDestructible
         shootActionTick = new ActionTick(shootTick);
 
         Resources = new Resource(StartStones, StartAmmo, transform);
+
+        animator = transform.GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -92,13 +96,13 @@ public class Player : Movement, IDestructible
                 switch (currentTile.tag)
                 {
                     case "WallTile":
-                        Debug.Log("WallTile");
                         break;
                     case "StoneResourceTile":
                         if (resourceActionTick.IsAction())
                         {
                             Resources.AddStone();
                             OnInformationUpdated();
+                            animator.SetTrigger("PickUp");
                         }
                         break;
                     case "AmmoResourceTile":
@@ -106,6 +110,7 @@ public class Player : Movement, IDestructible
                         {
                             Resources.AddAmmo();
                             OnInformationUpdated();
+                            animator.SetTrigger("PickUp");
                         }
                         break;
                     case "RepairTile":
@@ -123,13 +128,13 @@ public class Player : Movement, IDestructible
                                     {
                                         OnInformationUpdated();
                                         Resources.UseStone();
+                                        animator.SetTrigger("Repair");
                                     }
                                 }
                             }
                         }
                         break;
                     case "BaseTile":
-                        Debug.Log("BaseTile");
                         break;
                     case "Wall":
                         if (shootActionTick.IsAction())
@@ -154,6 +159,7 @@ public class Player : Movement, IDestructible
         else
         {
             Move();
+            animator.Play("Run");
         }
     }
 

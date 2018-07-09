@@ -24,7 +24,7 @@ public class Movement : MonoBehaviour
     float halfHeight = 0;
 
     //TODO Simplify with ENUM
-    JumpState jumpState = JumpState.None;
+    ClimpState climpState = ClimpState.None;
     Vector3 jumpTarget;
 
     protected void Init()
@@ -121,17 +121,17 @@ public class Movement : MonoBehaviour
             //Calculate the units position on top on the target tile
             target.y += halfHeight + t.GetComponent<Collider>().bounds.extents.y;
 
-            var d = Vector3.Distance(transform.position, target);
-            if (oldDistance >= d)
+            float d = Vector3.Distance(transform.position, target);
+            if (d <= oldDistance && !(transform.position.x == target.x && transform.position.z == target.z))
             {
-                bool jump = transform.position.y != target.y;
+                bool climp = transform.position.y != target.y;
 
-                if (jump)
+                if (climp)
                 {
-                    if (JumpState.MoveToCenter == jumpState)
+                    if (ClimpState.MoveToCenter == climpState)
                         oldDistance = d;
 
-                    Jump(target);
+                    Climp(target);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ public class Movement : MonoBehaviour
                 Path.Pop();
                 t.MovementTo = false;
                 movingInit = false;
-                jumpState = JumpState.None;
+                climpState = ClimpState.None;
                 oldDistance = float.MaxValue;
             }
         }
@@ -187,40 +187,36 @@ public class Movement : MonoBehaviour
         selectableTiles.Clear();
     }
 
-    void Jump(Vector3 target)
+    void Climp(Vector3 target)
     {
-        switch (jumpState)
+        switch (climpState)
         {
-            case JumpState.FallDown:
-                FallDownward(target);
+            case ClimpState.ClimpDown:
+                ClimpDown(target);
                 break;
-            case JumpState.JumpUp:
-                JumpUpward(target);
+            case ClimpState.ClimpUp:
+                ClimpUp(target);
                 break;
-            case JumpState.MoveToEdge:
+            case ClimpState.MoveToEdge:
                 MoveToEdge(target);
                 break;
-            case JumpState.MoveToCenter:
+            case ClimpState.MoveToCenter:
                 MoveToCenter(target);
                 break;
             default:
-                PrepareJump(target);
+                PrepareClimp(target);
                 break;
         }
     }
 
     void MoveToEdge(Vector3 target)
     {
-        Debug.Log("MoveToEdge");
         //Wenn runter und z ist größer als zielblock
         bool a = (transform.position.y > target.y) && transform.position.z > target.z + 0.5 - transform.localScale.x / 2;
 
         //Wenn rauf und z ist kleiner als zielblock
         bool b = (transform.position.y < target.y) && transform.position.z < target.z - 0.5 - transform.localScale.x / 2;
-
-        Debug.Log("A: " + a);
-        Debug.Log("B: " + b);
-
+        
         if (a || b)
         {
             SetHorizontalVelocity();
@@ -228,9 +224,9 @@ public class Movement : MonoBehaviour
         else
         {
             if (transform.position.y > target.y)
-                jumpState = JumpState.FallDown;
+                climpState = ClimpState.ClimpDown;
             else
-                jumpState = JumpState.JumpUp;
+                climpState = ClimpState.ClimpUp;
 
 
             velocity /= 5.0f;
@@ -238,9 +234,8 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void JumpUpward(Vector3 target)
+    void ClimpUp(Vector3 target)
     {
-        Debug.Log("JumpUpward");
 
         var h = new Vector3(heading.x, 2, 0);
 
@@ -250,23 +245,19 @@ public class Movement : MonoBehaviour
 
         if (transform.position.y > target.y)
         {
-            Debug.Log("HÖHÖHHÖÖHÖHÖÖ");
-            jumpState = JumpState.MoveToCenter;
+            climpState = ClimpState.MoveToCenter;
         }
     }
 
-    void FallDownward(Vector3 target)
+    void ClimpDown(Vector3 target)
     {
-
-        Debug.Log("FallDownward");
-
         var h = new Vector3(heading.x, -2, 0);
 
         velocity = h * moveSpeed / 3.0f;
         
         if (transform.position.y <= target.y)
         {
-            jumpState = JumpState.MoveToCenter;
+            climpState = ClimpState.MoveToCenter;
 
             Vector3 p = transform.position;
             p.y = target.y;
@@ -278,7 +269,6 @@ public class Movement : MonoBehaviour
 
     void MoveToCenter(Vector3 target)
     {
-        Debug.Log("MoveToCenter");
         velocity += Physics.gravity * Time.deltaTime;
 
         var h = new Vector3(heading.x, 0, heading.z);
@@ -286,10 +276,8 @@ public class Movement : MonoBehaviour
         velocity = h * moveSpeed / 3.0f;
     }
 
-    void PrepareJump(Vector3 target)
+    void PrepareClimp(Vector3 target)
     {
-        Debug.Log("PrepareJump");
-
         float targetY = target.y;
         float targetX = target.x;
         float targetZ = target.z;
@@ -298,16 +286,14 @@ public class Movement : MonoBehaviour
 
         CalculateHeading(target);
 
-        jumpState = JumpState.MoveToEdge;
+        climpState = ClimpState.MoveToEdge;
     }
-
-
-
-    public enum JumpState
+    
+    public enum ClimpState
     {
-        FallDown,
+        ClimpDown,
         MoveToEdge,
-        JumpUp,
+        ClimpUp,
         MoveToCenter,
         None
     }

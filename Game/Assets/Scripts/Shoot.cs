@@ -5,8 +5,8 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     public GameObject Projectile;
-    public float velocity = 80;
-    public Vector3 Offset = new Vector3(0, 0, 0.5f);
+    private float velocity = 40;
+    private Vector3 Offset = new Vector3(0, 0.6f, 0.2f);
 
     private bool bulletIsOnWay;
     private float oldDamage;
@@ -41,7 +41,7 @@ public class Shoot : MonoBehaviour
                 temporaryLive -= Damage;
 
                 GameObject go = (GameObject)Instantiate(Projectile, transform.position + Offset, Quaternion.identity);
-                var dir = EnemySpawn.RowEnemyMap[row].Peek().transform.position - transform.position;
+                var dir = EnemySpawn.RowEnemyMap[row].Peek().transform.position - Offset - transform.position;
                 go.GetComponent<Rigidbody>().AddForce(dir * velocity);
 
                 go.GetComponent<Bullet>().Damage = Damage;
