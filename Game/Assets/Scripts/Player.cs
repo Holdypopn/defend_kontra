@@ -210,6 +210,7 @@ public class Player : Movement, IDestructible
 
         if (currentHealth <= 0)
         {
+            Debug.Log("Player die!");
             Die();
         }
     }

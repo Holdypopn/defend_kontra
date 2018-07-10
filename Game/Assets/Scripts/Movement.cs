@@ -147,8 +147,7 @@ public class Movement : MonoBehaviour
             else
             {
                 //Rotate
-                Quaternion q = Quaternion.FromToRotation(transform.right, new Vector3(1, 0, 0));
-                transform.rotation = q * transform.rotation;
+                transform.eulerAngles = new Vector3(0, 0, 0);
                 transform.GetChild(0).GetComponent<HealthBarRotation>().Refresh();
 
                 //Tile center reached
