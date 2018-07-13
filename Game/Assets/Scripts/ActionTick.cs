@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-//TODO works for now but needs refactoring
+//TODO works for now but needs refactoring - Eventbased mechanism?
 public class ActionTick
 {
     //Defines the damage tick

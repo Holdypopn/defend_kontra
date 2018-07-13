@@ -14,7 +14,7 @@ public class EnemySpawn : MonoBehaviour
         {4, new Queue<GameObject>() },
     };
     //Defines the resource tick
-    private ActionTick spawnActionTick;
+    private ActionTick spawnSingleActionTick;
     public int SpawnTick = 13000;
 
     public GameObject Enemy;
@@ -24,19 +24,19 @@ public class EnemySpawn : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        spawnActionTick = new ActionTick(SpawnTick);
+        spawnSingleActionTick = new ActionTick(SpawnTick);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (spawnActionTick.IsAction())
+        if (spawnSingleActionTick.IsAction())
         {
             System.Random r = new System.Random();
             SpawnEnemy(r.Next(0, 5));
 
             //Generate spawntime random
-            spawnActionTick = new ActionTick(r.Next(4000, 20000), false);
+            spawnSingleActionTick = new ActionTick(r.Next(4000, 20000), false);
         }
     }
 

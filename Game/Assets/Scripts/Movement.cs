@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
     protected Tile currentTile;
 
     protected bool moving = false;
-    private bool movingInit = false;
     public float jumpHeight = 2;
     public float BaseMoveSpeed = 2;
     internal float moveSpeed;
@@ -122,7 +121,7 @@ public class Movement : MonoBehaviour
             target.y += halfHeight + t.GetComponent<Collider>().bounds.extents.y;
 
             float d = Vector3.Distance(transform.position, target);
-            if (d <= oldDistance && !(transform.position.x == target.x && transform.position.z == target.z))
+            if (d < oldDistance && !(transform.position.x == target.x && transform.position.z == target.z))
             {
                 bool climp = transform.position.y != target.y;
 
@@ -154,7 +153,6 @@ public class Movement : MonoBehaviour
                 transform.position = target;
                 Path.Pop();
                 t.MovementTo = false;
-                movingInit = false;
                 climpState = ClimpState.None;
                 oldDistance = float.MaxValue;
             }
@@ -276,11 +274,7 @@ public class Movement : MonoBehaviour
     }
 
     void PrepareClimp(Vector3 target)
-    {
-        float targetY = target.y;
-        float targetX = target.x;
-        float targetZ = target.z;
-
+    { 
         target.y = transform.position.y;
 
         CalculateHeading(target);
