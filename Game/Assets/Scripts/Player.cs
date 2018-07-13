@@ -145,8 +145,8 @@ public class Player : Movement, IDestructible
 
                                 if (transform.GetComponent<Shoot>().Shooting(row, damage))
                                 {
-                                    OnInformationUpdated();
                                     Resources.UseAmmo();
+                                    OnInformationUpdated();
                                 }
                             }
                         }
