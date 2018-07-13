@@ -126,8 +126,8 @@ public class Player : Movement, IDestructible
                                 {
                                     if (wall.Repair(RepairEfficiencyPerStone))
                                     {
-                                        OnInformationUpdated();
                                         Resources.UseStone();
+                                        OnInformationUpdated();
                                         animator.SetTrigger("Repair");
                                     }
                                 }
