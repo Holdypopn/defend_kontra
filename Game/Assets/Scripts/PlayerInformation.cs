@@ -74,14 +74,17 @@ public class PlayerInformation : MonoBehaviour
 
     private static void SetUiPropertys(string name, int level, int cost, int percentage)
     {
+        var component = t.Find("PlayerPropertys").Find("ScrollContainer").Find(name);
         string l = level < PlayerPropertys.MaxLevel ? level.ToString() : "Max";
         string c = level < PlayerPropertys.MaxLevel ? cost.ToString() : "";
 
         string text = name +"\n";
         text += "Level: " + l;
         text += "\nCost: " + c;
-        t.Find("PlayerPropertys").Find("ScrollContainer").Find(name).Find("Text").GetComponent<Text>().text = text; ;
-        t.Find("PlayerPropertys").Find("ScrollContainer").Find(name).GetComponent<Button>().enabled = level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost;
+        component.Find("Text").GetComponent<Text>().text = text; ;
+        component.GetComponent<Button>().enabled = level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost;
+        component.GetComponent<Button>().enabled = level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost;
+        component.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Upgrades\\" + name);
     }
 
     public void UpgradeMoveSpeed()
