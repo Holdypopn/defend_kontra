@@ -173,6 +173,12 @@ public class PlayerInformation : MonoBehaviour
         Thread.Sleep(10000);
         UpdateStats();
     }
+
+    public void ToggleUpgradeView()
+    {
+        var go = t.Find("PlayerPropertys").gameObject;
+        go.SetActive(!go.activeInHierarchy);
+    }
 }
 
 public class PlayerPropertys
