@@ -34,6 +34,9 @@ public class EnemySpawn : MonoBehaviour
         {
             System.Random r = new System.Random();
             SpawnEnemy(r.Next(0, 5));
+
+            //Generate spawntime random
+            spawnActionTick = new ActionTick(r.Next(4000, 20000), false);
         }
     }
 

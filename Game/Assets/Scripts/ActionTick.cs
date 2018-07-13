@@ -9,8 +9,8 @@ using UnityEngine;
 public class ActionTick
 {
     //Defines the damage tick
-    public int tick = 1000;
-
+    private bool callOnFirstCheck;
+    private int tick;
     Thread t;
 
     public bool IsAction()
@@ -19,20 +19,27 @@ public class ActionTick
         {
             t = new Thread(new ThreadStart(wait));
             t.Start();
-            return true;
+
+            //Decides if true is returned on first call or not
+            if (callOnFirstCheck)
+                return true;
+            
+            callOnFirstCheck = true; 
+            return false;
         }
         else
             return false;
     }
 
-    public ActionTick(int tick)
-    {
-        this.tick = tick;
-    }
+public ActionTick(int tick, bool callOnFirstCheck = true)
+{
+    this.callOnFirstCheck = callOnFirstCheck;
+    this.tick = tick;
+}
 
-    private void wait()
-    {
-        Thread.Sleep(tick);
-    }
+private void wait()
+{
+    Thread.Sleep(tick);
+}
 }
 
