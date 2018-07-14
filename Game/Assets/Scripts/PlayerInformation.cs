@@ -84,7 +84,7 @@ public class PlayerInformation : MonoBehaviour
         component.Find("Text").GetComponent<Text>().text = text; ;
         component.GetComponent<Button>().enabled = level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost;
         component.GetComponent<Button>().enabled = level < PlayerPropertys.MaxLevel && Statistics.Credits >= cost;
-        component.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Upgrades\\" + name);
+        component.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("LicenceClarification\\" + name);
     }
 
     public void UpgradeMoveSpeed()

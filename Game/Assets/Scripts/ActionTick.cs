@@ -12,6 +12,18 @@ public class ActionTick
     private bool callOnFirstCheck;
     private int tick;
     Thread t;
+    DateTime threadStart;
+
+    public int TimeToNextTick
+    {
+        get
+        {
+            if (t == null || !t.IsAlive)
+                return -1;
+
+            return tick - (int)(DateTime.Now - threadStart).TotalMilliseconds;
+        }
+    }
 
     public bool IsAction()
     {
@@ -31,6 +43,14 @@ public class ActionTick
             return false;
     }
 
+    public bool IsRunning()
+    {
+        if (t == null || !t.IsAlive)
+            return false;
+
+        return true;
+    }
+
 public ActionTick(int tick, bool callOnFirstCheck = true)
 {
     this.callOnFirstCheck = callOnFirstCheck;
@@ -39,6 +59,7 @@ public ActionTick(int tick, bool callOnFirstCheck = true)
 
 private void wait()
 {
+    threadStart =  DateTime.Now;
     Thread.Sleep(tick);
 }
 }
